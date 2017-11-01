@@ -14,11 +14,15 @@ namespace XlsxVisionerV2 {
     public partial class Form1 : Form {
         private string Excel03ConString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties='Excel 8.0;HDR={1}'";
         private string Excel07ConString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 8.0;HDR={1}'";
+        DataTable dataTableOriginal = new DataTable();
+        DataTable dataTableSelect = new DataTable();
         public Form1 () {
             InitializeComponent();
+            dataGridViewOriginal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dataGridViewSelect.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
 
-        private void OpenButton_Click (object sender, EventArgs e) {
+        private void openButton_Click (object sender, EventArgs e) {
             openFileDialog1.ShowDialog();
         }
 
@@ -59,19 +63,38 @@ namespace XlsxVisionerV2 {
             using (OleDbConnection con = new OleDbConnection(conStr)) {
                 using (OleDbCommand cmd = new OleDbCommand()) {
                     using (OleDbDataAdapter oda = new OleDbDataAdapter()) {
-                        DataTable dt = new DataTable();
-                        cmd.CommandText = "SELECT * From [" + sheetName + "]";
-                        cmd.Connection = con;
                         con.Open();
-                        oda.SelectCommand = cmd;
-                        oda.Fill(dt);
+                        foreach (string Name in sheetNames) {
+                            cmd.CommandText = "SELECT * From [" + Name + "]";
+                            cmd.Connection = con;
+                            oda.SelectCommand = cmd;
+                            oda.Fill(dataTableOriginal);
+                        }
                         con.Close();
-
-                        //Populate DataGridView.
-                        dataGridView1.DataSource = dt;
+                        dataGridViewOriginal.DataSource = dataTableOriginal;
                     }
                 }
             }
+        }
+
+        private void selectButton_Click (object sender, EventArgs e) {
+
+            for (int i = 0; i < dataGridViewOriginal.SelectedCells.Count; i++) {
+                dataTableSelect.Columns.Add(i.ToString());
+                dataTableSelect.Rows.Add(dataGridViewOriginal.SelectedCells[i].FormattedValue.ToString());
+            }
+
+            dataGridViewSelect.DataSource = dataTableSelect;
+
+            //DataGridViewRow row = (DataGridViewRow)yourDataGridView.Rows[0].Clone();
+            //row.Cells[0].Value = "XYZ";
+            //row.Cells[1].Value = 50.2;
+            //yourDataGridView.Rows.Add(row);
+            //    if (DataGridView1.SelectedCells[counter].FormattedValueType ==
+            //Type.GetType("System.String"))
+            //    value = DataGridView1.SelectedCells[counter]
+            //        .FormattedValue.ToString();
+
         }
     }
 }
