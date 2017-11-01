@@ -25,8 +25,9 @@ namespace XlsxVisionerV2 {
         private void openFileDialog1_FileOk (object sender, CancelEventArgs e) {
             string filePath = openFileDialog1.FileName;
             string extension = Path.GetExtension(filePath);
-            string header = "YES";//rbHeaderYes.Checked ? "YES" : "NO";
-            string conStr, sheetName;
+            string header = "NO";//rbHeaderYes.Checked ? "YES" : "NO";
+            string conStr;
+            List<string> sheetNames = new List<string>();
 
             conStr = string.Empty;
             switch (extension) {
@@ -40,13 +41,16 @@ namespace XlsxVisionerV2 {
                     break;
             }
 
-            //Get the name of the First Sheet.
+            // get the names of the sheets.
             using (OleDbConnection con = new OleDbConnection(conStr)) {
                 using (OleDbCommand cmd = new OleDbCommand()) {
                     cmd.Connection = con;
                     con.Open();
                     DataTable dtExcelSchema = con.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                    sheetName = dtExcelSchema.Rows[0]["TABLE_NAME"].ToString();
+                    // fill the list
+                    for (int i = 0; i < dtExcelSchema.Rows.Count; i++) {
+                        sheetNames.Add(dtExcelSchema.Rows[i]["TABLE_NAME"].ToString());
+                    }
                     con.Close();
                 }
             }
