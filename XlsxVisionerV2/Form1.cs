@@ -76,14 +76,20 @@ namespace XlsxVisionerV2 {
                 }
             }
         }
-
+        // move selected cells from 'original' to 'select' DataTable
         private void selectButton_Click (object sender, EventArgs e) {
+            DataRow rows = dataTableSelect.NewRow();
+            int numberOfCells = dataGridViewOriginal.SelectedCells.Count;
 
-            for (int i = 0; i < dataGridViewOriginal.SelectedCells.Count; i++) {
-                dataTableSelect.Columns.Add(i.ToString());
-                dataTableSelect.Rows.Add(dataGridViewOriginal.SelectedCells[i].FormattedValue.ToString());
+            for (int i = 0; i < numberOfCells; i++) {
+                // extend a number of columns
+                if (i >= dataTableSelect.Columns.Count) {
+                    dataTableSelect.Columns.Add((i + 1).ToString());
+                }
+                // make rows from rotate value
+                rows[i] = dataGridViewOriginal.SelectedCells[numberOfCells - i - 1].FormattedValue.ToString();
             }
-
+            dataTableSelect.Rows.Add(rows);
             dataGridViewSelect.DataSource = dataTableSelect;
 
             //DataGridViewRow row = (DataGridViewRow)yourDataGridView.Rows[0].Clone();
