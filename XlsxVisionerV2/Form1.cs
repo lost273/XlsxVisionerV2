@@ -90,14 +90,16 @@ namespace XlsxVisionerV2 {
                 }
                 // make rows from rotate value
                 rows[i] = dataGridViewOriginal.SelectedCells[numberOfCells - i - 1].FormattedValue.ToString();
-                dataGridViewOriginal.SelectedCells[numberOfCells - i - 1].Value = "";
             }
-            //determine how data will be summing :
+            //determine accordance
             if (!AccordanceWithPattern(numberOfCells, rows)) {
                 MessageBox.Show("Selected data not have according with pattern!") ;
                 return;
             }
-
+            // clear selected cells
+            for (int i = 0; i < numberOfCells; i++) {
+                dataGridViewOriginal.SelectedCells[i].Value = string.Empty;
+            }
             //determine the vector selected by the user [vertical][horizontal]
 
             //data collection according to vector and method of summing
@@ -107,9 +109,13 @@ namespace XlsxVisionerV2 {
             // remove empty rows
             for (int i = dataGridViewOriginal.Rows.Count-1; i > -1; --i) {
                 DataGridViewRow row = dataGridViewOriginal.Rows[i];
-                if ((!row.IsNewRow) && (row.Cells[0].Value.ToString() ==  "")) {
-                    dataGridViewOriginal.Rows.RemoveAt(i);
+                bool isRowEmpty = true;
+                for (int col = 0; col < row.Cells.Count; col++) {
+                    if ((row.Cells[col].Value != null) && (row.Cells[col].Value.ToString().Length > 0)) {
+                        isRowEmpty = false;
+                    }
                 }
+                if (isRowEmpty) dataGridViewOriginal.Rows.RemoveAt(i);
             }
         //    private void clearGrid (DataGridView view) {
         //    for (int row = 0; row < view.Rows.Count; ++row) {
@@ -139,9 +145,8 @@ namespace XlsxVisionerV2 {
         //        .FormattedValue.ToString();
 
         }
-
-        //[string - comparable_field][quantity-sumrable_field][cost-sumrable_field][quantity + cost] 
-        //OR [string - comparable_field][total-sumrable_field]
+        // two cells pattern = [string - comparable_field][total-sumrable_field]
+        // four cells pattern = [string - comparable_field][quantity-sumrable_field][cost-sumrable_field][quantity + cost] 
         public bool AccordanceWithPattern (int length, DataRow rows) {
             decimal result;
             switch (length) {
