@@ -93,10 +93,12 @@ namespace XlsxVisionerV2 {
                 dataGridViewOriginal.SelectedCells[numberOfCells - i - 1].Value = "";
             }
             //determine how data will be summing :
-            //[string - comparable_field][quantity-sumrable_field][cost-sumrable_field][quantity + cost] 
-            //OR [string - comparable_field][total-sumrable_field]
+            if (!AccordanceWithPattern(numberOfCells, rows)) {
+                MessageBox.Show("Selected data not have according with pattern!") ;
+                return;
+            }
 
-            //determine the vector selected by the user
+            //determine the vector selected by the user [vertical][horizontal]
 
             //data collection according to vector and method of summing
 
@@ -136,6 +138,26 @@ namespace XlsxVisionerV2 {
         //    value = DataGridView1.SelectedCells[counter]
         //        .FormattedValue.ToString();
 
-    }
+        }
+
+        //[string - comparable_field][quantity-sumrable_field][cost-sumrable_field][quantity + cost] 
+        //OR [string - comparable_field][total-sumrable_field]
+        public bool AccordanceWithPattern (int length, DataRow rows) {
+            switch (length) {
+                case 2:
+                    if (rows[0].GetType() == Type.GetType("System.String"))
+                        if (rows[1].GetType() == Type.GetType("System.Int32"))
+                            return true;
+                    break;
+                case 4:
+                    if (rows[0].GetType() == Type.GetType("System.String"))
+                        if (rows[1].GetType() == Type.GetType("System.Int32"))
+                            if (rows[2].GetType() == Type.GetType("System.Int32"))
+                                if (rows[3].GetType() == Type.GetType("System.Int32"))
+                                    return true;
+                    break;
+            }
+            return false;
+        }
     }
 }
