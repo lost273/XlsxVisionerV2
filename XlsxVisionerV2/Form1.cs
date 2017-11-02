@@ -58,6 +58,8 @@ namespace XlsxVisionerV2 {
                     con.Close();
                 }
             }
+            // reset dataTable and dataGridView
+            dataTableOriginal.Clear();
 
             //Read Data from the First Sheet.
             using (OleDbConnection con = new OleDbConnection(conStr)) {
@@ -88,19 +90,52 @@ namespace XlsxVisionerV2 {
                 }
                 // make rows from rotate value
                 rows[i] = dataGridViewOriginal.SelectedCells[numberOfCells - i - 1].FormattedValue.ToString();
+                dataGridViewOriginal.SelectedCells[numberOfCells - i - 1].Value = "";
             }
+            //determine how data will be summing :
+            //[string - comparable_field][quantity-sumrable_field][cost-sumrable_field][quantity + cost] 
+            //OR [string - comparable_field][total-sumrable_field]
+
+            //determine the vector selected by the user
+
+            //data collection according to vector and method of summing
+
             dataTableSelect.Rows.Add(rows);
             dataGridViewSelect.DataSource = dataTableSelect;
+            // remove empty rows
+            for (int i = dataGridViewOriginal.Rows.Count-1; i > -1; --i) {
+                DataGridViewRow row = dataGridViewOriginal.Rows[i];
+                if ((!row.IsNewRow) && (row.Cells[0].Value.ToString() ==  "")) {
+                    dataGridViewOriginal.Rows.RemoveAt(i);
+                }
+            }
+        //    private void clearGrid (DataGridView view) {
+        //    for (int row = 0; row < view.Rows.Count; ++row) {
+        //        bool isEmpty = true;
+        //        for (int col = 0; col < view.Columns.Count; ++col) {
+        //            object value = view.Rows[row].Cells[col].Value;
+        //            if (value != null && value.ToString().Length > 0) {
+        //                isEmpty = false;
+        //                break;
+        //            }
+        //        }
+        //        if (isEmpty) {
+        //            // deincrement (after the call) since we are removing the row
+        //            view.Rows.RemoveAt(row--);
+        //        }
+        //    }
+        //}
 
-            //DataGridViewRow row = (DataGridViewRow)yourDataGridView.Rows[0].Clone();
-            //row.Cells[0].Value = "XYZ";
-            //row.Cells[1].Value = 50.2;
-            //yourDataGridView.Rows.Add(row);
-            //    if (DataGridView1.SelectedCells[counter].FormattedValueType ==
-            //Type.GetType("System.String"))
-            //    value = DataGridView1.SelectedCells[counter]
-            //        .FormattedValue.ToString();
 
-        }
+        //DataGridViewRow row = (DataGridViewRow)yourDataGridView.Rows[0].Clone();
+        //row.Cells[0].Value = "XYZ";
+        //row.Cells[1].Value = 50.2;
+        //yourDataGridView.Rows.Add(row);
+        //    if (DataGridView1.SelectedCells[counter].FormattedValueType ==
+        //Type.GetType("System.String"))
+        //    value = DataGridView1.SelectedCells[counter]
+        //        .FormattedValue.ToString();
+
+    }
     }
 }
