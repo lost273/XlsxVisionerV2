@@ -143,17 +143,18 @@ namespace XlsxVisionerV2 {
         //[string - comparable_field][quantity-sumrable_field][cost-sumrable_field][quantity + cost] 
         //OR [string - comparable_field][total-sumrable_field]
         public bool AccordanceWithPattern (int length, DataRow rows) {
+            decimal result;
             switch (length) {
                 case 2:
-                    if (rows[0].GetType() == Type.GetType("System.String"))
-                        if (rows[1].GetType() == Type.GetType("System.Int32"))
+                    if (!Decimal.TryParse(rows[0].ToString(), out result))
+                        if (Decimal.TryParse(rows[1].ToString(), out result))
                             return true;
                     break;
                 case 4:
-                    if (rows[0].GetType() == Type.GetType("System.String"))
-                        if (rows[1].GetType() == Type.GetType("System.Int32"))
-                            if (rows[2].GetType() == Type.GetType("System.Int32"))
-                                if (rows[3].GetType() == Type.GetType("System.Int32"))
+                    if (!Decimal.TryParse(rows[0].ToString(), out result))
+                        if (Decimal.TryParse(rows[1].ToString(), out result))
+                            if (Decimal.TryParse(rows[2].ToString(), out result))
+                                if (Decimal.TryParse(rows[3].ToString(), out result))
                                     return true;
                     break;
             }
