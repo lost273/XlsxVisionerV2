@@ -97,9 +97,14 @@ namespace XlsxVisionerV2 {
                 return;
             }
             // clear selected cells
-            for (int i = 0; i < numberOfCells; i++) {
-                dataGridViewOriginal.SelectedCells[i].Value = string.Empty;
+            dataGridViewOriginal.SelectedCells[0].Value = String.Empty;
+            dataGridViewOriginal.SelectedCells[1].Value = null;
+            if (numberOfCells == 4) {
+                dataGridViewOriginal.SelectedCells[2].Value = null;
+                dataGridViewOriginal.SelectedCells[3].Value = null;
             }
+                    
+            
             //determine the vector selected by the user [vertical][horizontal]
 
             //data collection according to vector and method of summing
@@ -107,16 +112,17 @@ namespace XlsxVisionerV2 {
             dataTableSelect.Rows.Add(rows);
             dataGridViewSelect.DataSource = dataTableSelect;
             // remove empty rows
-            for (int i = dataGridViewOriginal.Rows.Count-1; i > -1; --i) {
-                DataGridViewRow row = dataGridViewOriginal.Rows[i];
-                bool isRowEmpty = true;
-                for (int col = 0; col < row.Cells.Count; col++) {
-                    if ((row.Cells[col].Value != null) && (row.Cells[col].Value.ToString().Length > 0)) {
-                        isRowEmpty = false;
-                    }
-                }
-                if (isRowEmpty) dataGridViewOriginal.Rows.RemoveAt(i);
-            }
+            RemoveEmptyRows(dataGridViewOriginal);
+            //for (int i = dataGridViewOriginal.Rows.Count-1; i > -1; --i) {
+            //    DataGridViewRow row = dataGridViewOriginal.Rows[i];
+            //    bool isRowEmpty = true;
+            //    for (int col = 0; col < row.Cells.Count; col++) {
+            //        if ((row.Cells[col].Value != null) && (row.Cells[col].Value.ToString().Length > 0)) {
+            //            isRowEmpty = false;
+            //        }
+            //    }
+            //    if (isRowEmpty) dataGridViewOriginal.Rows.RemoveAt(i);
+            //}
         //    private void clearGrid (DataGridView view) {
         //    for (int row = 0; row < view.Rows.Count; ++row) {
         //        bool isEmpty = true;
@@ -147,7 +153,7 @@ namespace XlsxVisionerV2 {
         }
         // two cells pattern = [string - comparable_field][total-sumrable_field]
         // four cells pattern = [string - comparable_field][quantity-sumrable_field][cost-sumrable_field][quantity + cost] 
-        public bool AccordanceWithPattern (int length, DataRow rows) {
+        private bool AccordanceWithPattern (int length, DataRow rows) {
             decimal result;
             switch (length) {
                 case 2:
@@ -165,5 +171,23 @@ namespace XlsxVisionerV2 {
             }
             return false;
         }
+        // remove empty rows in DataGridView
+        private void RemoveEmptyRows (DataGridView view) {
+            for (int row = 0; row < view.Rows.Count; ++row) {
+                bool isEmpty = true;
+                for (int col = 0; col < view.Columns.Count; ++col) {
+                    object value = view.Rows[row].Cells[col].Value;
+                    if (value != null && value.ToString().Length > 0) {
+                        isEmpty = false;
+                        break;
+                    }
+                }
+                if ((isEmpty) && (!view.Rows[row].IsNewRow)) {
+                    // deincrement (after the call) since we are removing the row
+                    view.Rows.RemoveAt(row--);
+                }
+            }
+        }
+
     }
 }
