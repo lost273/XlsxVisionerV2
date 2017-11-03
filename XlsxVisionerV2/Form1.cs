@@ -78,7 +78,7 @@ namespace XlsxVisionerV2 {
         }
         // move selected cells from 'original' to 'select' DataTable
         private void selectButton_Click (object sender, EventArgs e) {
-            DataRow rows = dataTableSelect.NewRow();
+            DataRow row = dataTableSelect.NewRow();
             int numberOfCells = dataGridViewOriginal.SelectedCells.Count;
             byte[,] vector = {
                 {0,0,0,0},
@@ -93,23 +93,12 @@ namespace XlsxVisionerV2 {
                     dataTableSelect.Columns.Add((i + 1).ToString());
                 }
                 // make rows from rotate value
-                rows[i] = dataGridViewOriginal.SelectedCells[numberOfCells - i - 1].FormattedValue;//.ToString();
+                row[i] = dataGridViewOriginal.SelectedCells[numberOfCells - i - 1].FormattedValue;//.ToString();
             }
             //determine accordance
-            if (!AccordanceWithPattern(numberOfCells, rows)) {
+            if (!AccordanceWithPattern(numberOfCells, row)) {
                 MessageBox.Show("Selected data not have according with pattern!") ;
                 return;
-            }
-            //determine the vector selected by the user [vertical][horizontal]
-
-            //data collection according to vector and method of summing
-            if (dataGridViewOriginal.SelectedCells[0].ColumnIndex == dataGridViewOriginal.SelectedCells[1].ColumnIndex) {
-                //[vertical]
-
-            }
-            else {
-                //[horizontal]
-                label1.Text = "g";
             }
             // clear selected cells
             dataGridViewOriginal.SelectedCells[0].Value = DBNull.Value;
@@ -118,26 +107,36 @@ namespace XlsxVisionerV2 {
                 dataGridViewOriginal.SelectedCells[2].Value = DBNull.Value;
                 dataGridViewOriginal.SelectedCells[3].Value = DBNull.Value;
             }
-            dataTableSelect.Rows.Add(rows);
+            //determine the vector selected by the user [vertical][horizontal]
+            if (dataGridViewOriginal.SelectedCells[0].ColumnIndex == dataGridViewOriginal.SelectedCells[1].ColumnIndex) {
+                //[vertical]
+                CollectVerticalData(dataGridViewOriginal, row, numberOfCells);
+            }
+            else {
+                //[horizontal]
+                CollectHorizontalData(dataGridViewOriginal, row, numberOfCells);
+            }
+           
+            dataTableSelect.Rows.Add(row);
             dataGridViewSelect.DataSource = dataTableSelect;
             // remove empty rows
             RemoveEmptyRows(dataGridViewOriginal);
         }
         // two cells pattern = [string - comparable_field][total-sumrable_field]
         // four cells pattern = [string - comparable_field][quantity-sumrable_field][cost-sumrable_field][quantity + cost] 
-        private bool AccordanceWithPattern (int length, DataRow rows) {
+        private bool AccordanceWithPattern (int length, DataRow row) {
             decimal result;
             switch (length) {
                 case 2:
-                    if (!Decimal.TryParse(rows[0].ToString(), out result))
-                        if (Decimal.TryParse(rows[1].ToString(), out result))
+                    if (!Decimal.TryParse(row[0].ToString(), out result))
+                        if (Decimal.TryParse(row[1].ToString(), out result))
                             return true;
                     break;
                 case 4:
-                    if (!Decimal.TryParse(rows[0].ToString(), out result))
-                        if (Decimal.TryParse(rows[1].ToString(), out result))
-                            if (Decimal.TryParse(rows[2].ToString(), out result))
-                                if (Decimal.TryParse(rows[3].ToString(), out result))
+                    if (!Decimal.TryParse(row[0].ToString(), out result))
+                        if (Decimal.TryParse(row[1].ToString(), out result))
+                            if (Decimal.TryParse(row[2].ToString(), out result))
+                                if (Decimal.TryParse(row[3].ToString(), out result))
                                     return true;
                     break;
             }
@@ -149,7 +148,7 @@ namespace XlsxVisionerV2 {
                 bool isEmpty = true;
                 for (int col = 0; col < view.Columns.Count; ++col) {
                     object value = view.Rows[row].Cells[col].Value;
-                    if (value != null && value.ToString().Length > 0) {
+                    if ((value != null) && (value.ToString().Length > 0)) {
                         isEmpty = false;
                         break;
                     }
@@ -160,6 +159,23 @@ namespace XlsxVisionerV2 {
                 }
             }
         }
+        //data collection according to vector whom will be chose the user
+        private void CollectVerticalData (DataGridView view, DataRow completeRow, int cellsCount) {
+            decimal result;
+            for (int row = 0; row < view.Rows.Count; ++row) {
+                for (int col = 0; col < view.Columns.Count; ++col) {
+                    object value = view.Rows[row].Cells[col].Value;
+                    if ((value != null) && (value.ToString().Length > 0)) {
+                        if ((!Decimal.TryParse(value.ToString(), out result)) && (value.ToString() == completeRow[0].ToString())) {
+                            completeRow[1] = view.Rows[row].Cells[col];
+                        }
+                    }
+                }
+            }
+        }
+        //data collection according to vector whom will be chose the user
+        private void CollectHorizontalData (DataGridView view, DataRow completeRow, int cellsCount) {
 
+        }
     }
 }
