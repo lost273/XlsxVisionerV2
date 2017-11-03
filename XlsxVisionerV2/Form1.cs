@@ -14,7 +14,6 @@ namespace XlsxVisionerV2 {
     public partial class Form1 : Form {
         private string Excel03ConString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties='Excel 8.0;HDR={1}'";
         private string Excel07ConString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 8.0;HDR={1}'";
-        DataTable dataTableOriginal = new DataTable();
         DataTable dataTableSelect = new DataTable();
         public Form1 () {
             InitializeComponent();
@@ -58,13 +57,12 @@ namespace XlsxVisionerV2 {
                     con.Close();
                 }
             }
-            // reset dataTable and dataGridView
-            dataTableOriginal.Clear();
 
             //Read Data from the First Sheet.
             using (OleDbConnection con = new OleDbConnection(conStr)) {
                 using (OleDbCommand cmd = new OleDbCommand()) {
                     using (OleDbDataAdapter oda = new OleDbDataAdapter()) {
+                        DataTable dataTableOriginal = new DataTable();
                         con.Open();
                         foreach (string Name in sheetNames) {
                             cmd.CommandText = "SELECT * From [" + Name + "]";
@@ -83,8 +81,10 @@ namespace XlsxVisionerV2 {
             DataRow rows = dataTableSelect.NewRow();
             int numberOfCells = dataGridViewOriginal.SelectedCells.Count;
             byte[,] vector = {
-                {0,0},
-                {0,0}
+                {0,0,0,0},
+                {0,0,0,0},
+                {0,0,0,0},
+                {0,0,0,0}
             };
 
             for (int i = 0; i < numberOfCells; i++) {
@@ -93,12 +93,23 @@ namespace XlsxVisionerV2 {
                     dataTableSelect.Columns.Add((i + 1).ToString());
                 }
                 // make rows from rotate value
-                rows[i] = dataGridViewOriginal.SelectedCells[numberOfCells - i - 1].FormattedValue.ToString();
+                rows[i] = dataGridViewOriginal.SelectedCells[numberOfCells - i - 1].FormattedValue;//.ToString();
             }
             //determine accordance
             if (!AccordanceWithPattern(numberOfCells, rows)) {
                 MessageBox.Show("Selected data not have according with pattern!") ;
                 return;
+            }
+            //determine the vector selected by the user [vertical][horizontal]
+
+            //data collection according to vector and method of summing
+            if (dataGridViewOriginal.SelectedCells[0].ColumnIndex == dataGridViewOriginal.SelectedCells[1].ColumnIndex) {
+                //[vertical]
+
+            }
+            else {
+                //[horizontal]
+                label1.Text = "g";
             }
             // clear selected cells
             dataGridViewOriginal.SelectedCells[0].Value = DBNull.Value;
@@ -107,16 +118,10 @@ namespace XlsxVisionerV2 {
                 dataGridViewOriginal.SelectedCells[2].Value = DBNull.Value;
                 dataGridViewOriginal.SelectedCells[3].Value = DBNull.Value;
             }
-                    
-            //determine the vector selected by the user [vertical][horizontal]
-
-            //data collection according to vector and method of summing
-
             dataTableSelect.Rows.Add(rows);
             dataGridViewSelect.DataSource = dataTableSelect;
             // remove empty rows
             RemoveEmptyRows(dataGridViewOriginal);
-
         }
         // two cells pattern = [string - comparable_field][total-sumrable_field]
         // four cells pattern = [string - comparable_field][quantity-sumrable_field][cost-sumrable_field][quantity + cost] 
