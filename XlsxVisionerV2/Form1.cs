@@ -82,6 +82,10 @@ namespace XlsxVisionerV2 {
         private void selectButton_Click (object sender, EventArgs e) {
             DataRow rows = dataTableSelect.NewRow();
             int numberOfCells = dataGridViewOriginal.SelectedCells.Count;
+            byte[,] vector = {
+                {0,0},
+                {0,0}
+            };
 
             for (int i = 0; i < numberOfCells; i++) {
                 // extend a number of columns
@@ -97,14 +101,13 @@ namespace XlsxVisionerV2 {
                 return;
             }
             // clear selected cells
-            dataGridViewOriginal.SelectedCells[0].Value = String.Empty;
-            dataGridViewOriginal.SelectedCells[1].Value = null;
+            dataGridViewOriginal.SelectedCells[0].Value = DBNull.Value;
+            dataGridViewOriginal.SelectedCells[1].Value = DBNull.Value;
             if (numberOfCells == 4) {
-                dataGridViewOriginal.SelectedCells[2].Value = null;
-                dataGridViewOriginal.SelectedCells[3].Value = null;
+                dataGridViewOriginal.SelectedCells[2].Value = DBNull.Value;
+                dataGridViewOriginal.SelectedCells[3].Value = DBNull.Value;
             }
                     
-            
             //determine the vector selected by the user [vertical][horizontal]
 
             //data collection according to vector and method of summing
@@ -113,42 +116,6 @@ namespace XlsxVisionerV2 {
             dataGridViewSelect.DataSource = dataTableSelect;
             // remove empty rows
             RemoveEmptyRows(dataGridViewOriginal);
-            //for (int i = dataGridViewOriginal.Rows.Count-1; i > -1; --i) {
-            //    DataGridViewRow row = dataGridViewOriginal.Rows[i];
-            //    bool isRowEmpty = true;
-            //    for (int col = 0; col < row.Cells.Count; col++) {
-            //        if ((row.Cells[col].Value != null) && (row.Cells[col].Value.ToString().Length > 0)) {
-            //            isRowEmpty = false;
-            //        }
-            //    }
-            //    if (isRowEmpty) dataGridViewOriginal.Rows.RemoveAt(i);
-            //}
-        //    private void clearGrid (DataGridView view) {
-        //    for (int row = 0; row < view.Rows.Count; ++row) {
-        //        bool isEmpty = true;
-        //        for (int col = 0; col < view.Columns.Count; ++col) {
-        //            object value = view.Rows[row].Cells[col].Value;
-        //            if (value != null && value.ToString().Length > 0) {
-        //                isEmpty = false;
-        //                break;
-        //            }
-        //        }
-        //        if (isEmpty) {
-        //            // deincrement (after the call) since we are removing the row
-        //            view.Rows.RemoveAt(row--);
-        //        }
-        //    }
-        //}
-
-
-        //DataGridViewRow row = (DataGridViewRow)yourDataGridView.Rows[0].Clone();
-        //row.Cells[0].Value = "XYZ";
-        //row.Cells[1].Value = 50.2;
-        //yourDataGridView.Rows.Add(row);
-        //    if (DataGridView1.SelectedCells[counter].FormattedValueType ==
-        //Type.GetType("System.String"))
-        //    value = DataGridView1.SelectedCells[counter]
-        //        .FormattedValue.ToString();
 
         }
         // two cells pattern = [string - comparable_field][total-sumrable_field]
