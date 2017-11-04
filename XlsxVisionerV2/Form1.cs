@@ -169,8 +169,13 @@ namespace XlsxVisionerV2 {
                     if ((value != null) && (value.ToString().Length > 0) && (!Decimal.TryParse(value.ToString(), out result)) 
                         && (value.ToString() == completeRow[0].ToString()) && (Convert.ToDecimal(view.Rows[row].Cells[col+2].Value) == Convert.ToDecimal(completeRow[2]))) {
                         completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row].Cells[col+1].Value);
+                        // clear
+                        view.Rows[row].Cells[col].Value= DBNull.Value;
+                        view.Rows[row].Cells[col+1].Value = DBNull.Value;
                         if (cellsCount == 4) {
                             completeRow[3] = Convert.ToDecimal(completeRow[1]) * Convert.ToDecimal(completeRow[2]);
+                            view.Rows[row].Cells[col+2].Value = DBNull.Value;
+                            view.Rows[row].Cells[col+3].Value = DBNull.Value;
                         }
                     }
                 }
