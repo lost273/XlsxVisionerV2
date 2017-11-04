@@ -38,7 +38,7 @@
             // openButton
             // 
             this.openButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.openButton.Location = new System.Drawing.Point(12, 12);
+            this.openButton.Location = new System.Drawing.Point(512, 19);
             this.openButton.Name = "openButton";
             this.openButton.Size = new System.Drawing.Size(75, 23);
             this.openButton.TabIndex = 0;
@@ -53,7 +53,7 @@
             this.dataGridViewOriginal.Dock = System.Windows.Forms.DockStyle.Left;
             this.dataGridViewOriginal.Location = new System.Drawing.Point(3, 16);
             this.dataGridViewOriginal.Name = "dataGridViewOriginal";
-            this.dataGridViewOriginal.Size = new System.Drawing.Size(500, 335);
+            this.dataGridViewOriginal.Size = new System.Drawing.Size(500, 425);
             this.dataGridViewOriginal.TabIndex = 1;
             // 
             // openFileDialog1
@@ -66,9 +66,9 @@
             this.dataGridViewSelect.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridViewSelect.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewSelect.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dataGridViewSelect.Location = new System.Drawing.Point(573, 16);
+            this.dataGridViewSelect.Location = new System.Drawing.Point(660, 16);
             this.dataGridViewSelect.Name = "dataGridViewSelect";
-            this.dataGridViewSelect.Size = new System.Drawing.Size(500, 335);
+            this.dataGridViewSelect.Size = new System.Drawing.Size(500, 425);
             this.dataGridViewSelect.TabIndex = 2;
             // 
             // selectButton
@@ -84,13 +84,17 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.dataGridViewOriginal);
             this.groupBox1.Controls.Add(this.selectButton);
+            this.groupBox1.Controls.Add(this.openButton);
             this.groupBox1.Controls.Add(this.dataGridViewSelect);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox1.Location = new System.Drawing.Point(12, 63);
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1076, 354);
+            this.groupBox1.Size = new System.Drawing.Size(1163, 444);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
@@ -98,7 +102,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(425, 27);
+            this.label1.Location = new System.Drawing.Point(524, 55);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 5;
@@ -109,16 +113,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1163, 444);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.openButton);
             this.Name = "Form1";
             this.Text = "XlsxVisionerV2";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewOriginal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSelect)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

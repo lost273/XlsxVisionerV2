@@ -108,7 +108,7 @@ namespace XlsxVisionerV2 {
             }
             else {
                 //[horizontal]
-                row = CollectHorizontalData(dataGridViewOriginal, row, numberOfCells);
+                CollectHorizontalData(dataGridViewOriginal, row, numberOfCells);
             }
            
             dataTableSelect.Rows.Add(row);
@@ -155,10 +155,6 @@ namespace XlsxVisionerV2 {
         }
         //data collection according to vector whom will be chose the user
         private void CollectVerticalData (DataGridView view, DataRow completeRow, int cellsCount) {
-            
-        }
-        //data collection according to vector whom will be chose the user
-        private DataRow CollectHorizontalData (DataGridView view, DataRow completeRow, int cellsCount) {
             decimal result;
             // to not check unnecessary columns
             int columnsForCheck = view.Columns.Count - cellsCount + 1;
@@ -166,21 +162,52 @@ namespace XlsxVisionerV2 {
             for (int row = 0; row < view.Rows.Count; ++row) {
                 for (int col = 0; col < columnsForCheck; ++col) {
                     object value = view.Rows[row].Cells[col].Value;
-                    if ((value != null) && (value.ToString().Length > 0) && (!Decimal.TryParse(value.ToString(), out result)) 
-                        && (value.ToString() == completeRow[0].ToString()) && (Convert.ToDecimal(view.Rows[row].Cells[col+2].Value) == Convert.ToDecimal(completeRow[2]))) {
-                        completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row].Cells[col+1].Value);
-                        // clear
-                        view.Rows[row].Cells[col].Value= DBNull.Value;
-                        view.Rows[row].Cells[col+1].Value = DBNull.Value;
-                        if (cellsCount == 4) {
+                    if ((value != null) && (value.ToString().Length > 0) && (!Decimal.TryParse(value.ToString(), out result))
+                        && (value.ToString() == completeRow[0].ToString())) {
+                        if (cellsCount == 2) {
+                            completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row].Cells[col + 1].Value);
+                            // clear
+                            view.Rows[row].Cells[col].Value = DBNull.Value;
+                            view.Rows[row].Cells[col + 1].Value = DBNull.Value;
+                        }
+                        if ((cellsCount == 4) && (Convert.ToDecimal(view.Rows[row].Cells[col + 2].Value) == Convert.ToDecimal(completeRow[2]))) {
+                            completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row].Cells[col + 1].Value);
                             completeRow[3] = Convert.ToDecimal(completeRow[1]) * Convert.ToDecimal(completeRow[2]);
-                            view.Rows[row].Cells[col+2].Value = DBNull.Value;
-                            view.Rows[row].Cells[col+3].Value = DBNull.Value;
+                            // clear
+                            view.Rows[row].Cells[col + 2].Value = DBNull.Value;
+                            view.Rows[row].Cells[col + 3].Value = DBNull.Value;
                         }
                     }
                 }
             }
-            return completeRow;
+        }
+        //data collection according to vector whom will be chose the user
+        private void CollectHorizontalData (DataGridView view, DataRow completeRow, int cellsCount) {
+            decimal result;
+            // to not check unnecessary columns
+            int columnsForCheck = view.Columns.Count - cellsCount + 1;
+
+            for (int row = 0; row < view.Rows.Count; ++row) {
+                for (int col = 0; col < columnsForCheck; ++col) {
+                    object value = view.Rows[row].Cells[col].Value;
+                    if ((value != null) && (value.ToString().Length > 0) && (!Decimal.TryParse(value.ToString(), out result))
+                        && (value.ToString() == completeRow[0].ToString())) {
+                        if (cellsCount == 2) {
+                            completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row].Cells[col + 1].Value);
+                            // clear
+                            view.Rows[row].Cells[col].Value = DBNull.Value;
+                            view.Rows[row].Cells[col + 1].Value = DBNull.Value;
+                        }
+                        if ((cellsCount == 4) && (Convert.ToDecimal(view.Rows[row].Cells[col + 2].Value) == Convert.ToDecimal(completeRow[2]))) {
+                            completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row].Cells[col + 1].Value);
+                            completeRow[3] = Convert.ToDecimal(completeRow[1]) * Convert.ToDecimal(completeRow[2]);
+                            // clear
+                            view.Rows[row].Cells[col + 2].Value = DBNull.Value;
+                            view.Rows[row].Cells[col + 3].Value = DBNull.Value;
+                        }
+                    }
+                }
+            }
         }
     }
 }
