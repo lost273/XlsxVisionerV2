@@ -80,12 +80,6 @@ namespace XlsxVisionerV2 {
         private void selectButton_Click (object sender, EventArgs e) {
             DataRow row = dataTableSelect.NewRow();
             int numberOfCells = dataGridViewOriginal.SelectedCells.Count;
-            byte[,] vector = {
-                {0,0,0,0},
-                {0,0,0,0},
-                {0,0,0,0},
-                {0,0,0,0}
-            };
 
             for (int i = 0; i < numberOfCells; i++) {
                 // extend a number of columns
@@ -114,7 +108,7 @@ namespace XlsxVisionerV2 {
             }
             else {
                 //[horizontal]
-                CollectHorizontalData(dataGridViewOriginal, row, numberOfCells);
+                row = CollectHorizontalData(dataGridViewOriginal, row, numberOfCells);
             }
            
             dataTableSelect.Rows.Add(row);
@@ -161,21 +155,27 @@ namespace XlsxVisionerV2 {
         }
         //data collection according to vector whom will be chose the user
         private void CollectVerticalData (DataGridView view, DataRow completeRow, int cellsCount) {
+            
+        }
+        //data collection according to vector whom will be chose the user
+        private DataRow CollectHorizontalData (DataGridView view, DataRow completeRow, int cellsCount) {
             decimal result;
+            // to not check unnecessary columns
+            int columnsForCheck = view.Columns.Count - cellsCount + 1;
+
             for (int row = 0; row < view.Rows.Count; ++row) {
-                for (int col = 0; col < view.Columns.Count; ++col) {
+                for (int col = 0; col < columnsForCheck; ++col) {
                     object value = view.Rows[row].Cells[col].Value;
-                    if ((value != null) && (value.ToString().Length > 0)) {
-                        if ((!Decimal.TryParse(value.ToString(), out result)) && (value.ToString() == completeRow[0].ToString())) {
-                            completeRow[1] = view.Rows[row].Cells[col];
+                    if ((value != null) && (value.ToString().Length > 0) && (!Decimal.TryParse(value.ToString(), out result)) 
+                        && (value.ToString() == completeRow[0].ToString()) && (Convert.ToDecimal(view.Rows[row].Cells[col+2].Value) == Convert.ToDecimal(completeRow[2]))) {
+                        completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row].Cells[col+1].Value);
+                        if (cellsCount == 4) {
+                            completeRow[3] = Convert.ToDecimal(completeRow[1]) * Convert.ToDecimal(completeRow[2]);
                         }
                     }
                 }
             }
-        }
-        //data collection according to vector whom will be chose the user
-        private void CollectHorizontalData (DataGridView view, DataRow completeRow, int cellsCount) {
-
+            return completeRow;
         }
     }
 }
