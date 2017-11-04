@@ -142,7 +142,7 @@ namespace XlsxVisionerV2 {
                 bool isEmpty = true;
                 for (int col = 0; col < view.Columns.Count; ++col) {
                     object value = view.Rows[row].Cells[col].Value;
-                    if ((value != null) && (value.ToString().Length > 0)) {
+                    if (IsDataNotEmpty(value)) {
                         isEmpty = false;
                         break;
                     }
@@ -153,6 +153,13 @@ namespace XlsxVisionerV2 {
                 }
             }
         }
+        //check the data to null or epmty
+        private bool IsDataNotEmpty(object data) {
+            if ((data != null) && (data.ToString().Length > 0)) {
+                return true;
+            }
+            return false;
+        }
         //data collection according to vector whom will be chose the user
         private void CollectVerticalData (DataGridView view, DataRow completeRow, int cellsCount) {
             decimal result;
@@ -162,7 +169,7 @@ namespace XlsxVisionerV2 {
             for (int row = 0; row < view.Rows.Count; ++row) {
                 for (int col = 0; col < columnsForCheck; ++col) {
                     object value = view.Rows[row].Cells[col].Value;
-                    if ((value != null) && (value.ToString().Length > 0) && (!Decimal.TryParse(value.ToString(), out result))
+                    if ((IsDataNotEmpty(value)) && (!Decimal.TryParse(value.ToString(), out result))
                         && (value.ToString() == completeRow[0].ToString())) {
                         if (cellsCount == 2) {
                             completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row].Cells[col + 1].Value);
@@ -186,12 +193,11 @@ namespace XlsxVisionerV2 {
             decimal result;
             // to not check unnecessary columns
             int columnsForCheck = view.Columns.Count - cellsCount + 1;
-
             for (int row = 0; row < view.Rows.Count; ++row) {
                 for (int col = 0; col < columnsForCheck; ++col) {
                     object value = view.Rows[row].Cells[col].Value;
-                    if ((value != null) && (value.ToString().Length > 0) && (!Decimal.TryParse(value.ToString(), out result))
-                        && (value.ToString() == completeRow[0].ToString())) {
+                    if ((IsDataNotEmpty(value)) && 
+                        (!Decimal.TryParse(value.ToString(), out result)) && (value.ToString() == completeRow[0].ToString())) {
                         if (cellsCount == 2) {
                             completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row].Cells[col + 1].Value);
                             // clear

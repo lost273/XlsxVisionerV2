@@ -7,3 +7,12 @@ D:\programs\Projects\GIT\XlsxVisionerV2\XlsxVisionerV2\obj\Debug\XlsxVisionerV2.
 D:\programs\Projects\GIT\XlsxVisionerV2\XlsxVisionerV2\obj\Debug\XlsxVisionerV2.csproj.GenerateResource.Cache
 D:\programs\Projects\GIT\XlsxVisionerV2\XlsxVisionerV2\obj\Debug\XlsxVisionerV2.exe
 D:\programs\Projects\GIT\XlsxVisionerV2\XlsxVisionerV2\obj\Debug\XlsxVisionerV2.pdb
+D:\prog\VSProj\GIT\XlsxVisionerV2\XlsxVisionerV2\bin\Debug\XlsxVisionerV2.exe.config
+D:\prog\VSProj\GIT\XlsxVisionerV2\XlsxVisionerV2\bin\Debug\XlsxVisionerV2.exe
+D:\prog\VSProj\GIT\XlsxVisionerV2\XlsxVisionerV2\bin\Debug\XlsxVisionerV2.pdb
+D:\prog\VSProj\GIT\XlsxVisionerV2\XlsxVisionerV2\obj\Debug\XlsxVisionerV2.csprojResolveAssemblyReference.cache
+D:\prog\VSProj\GIT\XlsxVisionerV2\XlsxVisionerV2\obj\Debug\XlsxVisionerV2.Form1.resources
+D:\prog\VSProj\GIT\XlsxVisionerV2\XlsxVisionerV2\obj\Debug\XlsxVisionerV2.Properties.Resources.resources
+D:\prog\VSProj\GIT\XlsxVisionerV2\XlsxVisionerV2\obj\Debug\XlsxVisionerV2.csproj.GenerateResource.Cache
+D:\prog\VSProj\GIT\XlsxVisionerV2\XlsxVisionerV2\obj\Debug\XlsxVisionerV2.exe
+D:\prog\VSProj\GIT\XlsxVisionerV2\XlsxVisionerV2\obj\Debug\XlsxVisionerV2.pdb
