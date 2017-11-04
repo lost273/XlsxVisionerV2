@@ -95,11 +95,8 @@ namespace XlsxVisionerV2 {
                 return;
             }
             // clear selected cells
-            dataGridViewOriginal.SelectedCells[0].Value = DBNull.Value;
-            dataGridViewOriginal.SelectedCells[1].Value = DBNull.Value;
-            if (numberOfCells == 4) {
-                dataGridViewOriginal.SelectedCells[2].Value = DBNull.Value;
-                dataGridViewOriginal.SelectedCells[3].Value = DBNull.Value;
+            for (int index = 0; index < numberOfCells; index++) {
+                dataGridViewOriginal.SelectedCells[index].Value = DBNull.Value;
             }
             //determine the vector selected by the user [vertical][horizontal]
             if (dataGridViewOriginal.SelectedCells[0].ColumnIndex == dataGridViewOriginal.SelectedCells[1].ColumnIndex) {
@@ -117,7 +114,7 @@ namespace XlsxVisionerV2 {
             RemoveEmptyRows(dataGridViewOriginal);
         }
         // two cells pattern = [string - comparable_field][total-sumrable_field]
-        // four cells pattern = [string - comparable_field][quantity-sumrable_field][cost-sumrable_field][quantity + cost] 
+        // four cells pattern = [string - comparable_field][quantity-sumrable_field][cost][quantity * cost] 
         private bool AccordanceWithPattern (int length, DataRow row) {
             decimal result;
             switch (length) {
@@ -160,29 +157,35 @@ namespace XlsxVisionerV2 {
             }
             return false;
         }
+        //clear the data
+        private void ClearValueFromDataGrid(DataGridView view, int cellsCount, int row, int col) {
+            while (cellsCount > 0) {
+                view.Rows[row].Cells[col + cellsCount - 1].Value = DBNull.Value;
+                cellsCount--;
+            }
+        }
         //data collection according to vector whom will be chose the user
         private void CollectVerticalData (DataGridView view, DataRow completeRow, int cellsCount) {
-            decimal result;
-            // to not check unnecessary columns
-            int columnsForCheck = view.Columns.Count - cellsCount + 1;
-
+            //to not check unnecessary rows
+            int rowsForCheck = view.Columns.Count - cellsCount + 1;
             for (int row = 0; row < view.Rows.Count; ++row) {
-                for (int col = 0; col < columnsForCheck; ++col) {
+                for (int col = 0; col < rowsForCheck; ++col) {
                     object value = view.Rows[row].Cells[col].Value;
-                    if ((IsDataNotEmpty(value)) && (!Decimal.TryParse(value.ToString(), out result))
-                        && (value.ToString() == completeRow[0].ToString())) {
+                    if ((IsDataNotEmpty(value)) &&
+                        (!Decimal.TryParse(value.ToString(), out decimal result)) && (value.ToString() == completeRow[0].ToString())) {
                         if (cellsCount == 2) {
+                            //[total-sumrable_field]
                             completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row].Cells[col + 1].Value);
-                            // clear
-                            view.Rows[row].Cells[col].Value = DBNull.Value;
-                            view.Rows[row].Cells[col + 1].Value = DBNull.Value;
+                            //clear
+                            ClearValueFromDataGrid(view, cellsCount, row, col);
                         }
                         if ((cellsCount == 4) && (Convert.ToDecimal(view.Rows[row].Cells[col + 2].Value) == Convert.ToDecimal(completeRow[2]))) {
+                            //[quantity-sumrable_field]
                             completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row].Cells[col + 1].Value);
+                            //[quantity * cost]
                             completeRow[3] = Convert.ToDecimal(completeRow[1]) * Convert.ToDecimal(completeRow[2]);
-                            // clear
-                            view.Rows[row].Cells[col + 2].Value = DBNull.Value;
-                            view.Rows[row].Cells[col + 3].Value = DBNull.Value;
+                            //clear
+                            ClearValueFromDataGrid(view, cellsCount, row, col);
                         }
                     }
                 }
@@ -190,26 +193,26 @@ namespace XlsxVisionerV2 {
         }
         //data collection according to vector whom will be chose the user
         private void CollectHorizontalData (DataGridView view, DataRow completeRow, int cellsCount) {
-            decimal result;
-            // to not check unnecessary columns
+            //to not check unnecessary columns
             int columnsForCheck = view.Columns.Count - cellsCount + 1;
             for (int row = 0; row < view.Rows.Count; ++row) {
                 for (int col = 0; col < columnsForCheck; ++col) {
                     object value = view.Rows[row].Cells[col].Value;
                     if ((IsDataNotEmpty(value)) && 
-                        (!Decimal.TryParse(value.ToString(), out result)) && (value.ToString() == completeRow[0].ToString())) {
+                        (!Decimal.TryParse(value.ToString(), out decimal result)) && (value.ToString() == completeRow[0].ToString())) {
                         if (cellsCount == 2) {
+                            //[total-sumrable_field]
                             completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row].Cells[col + 1].Value);
-                            // clear
-                            view.Rows[row].Cells[col].Value = DBNull.Value;
-                            view.Rows[row].Cells[col + 1].Value = DBNull.Value;
+                            //clear
+                            ClearValueFromDataGrid(view, cellsCount, row, col);
                         }
                         if ((cellsCount == 4) && (Convert.ToDecimal(view.Rows[row].Cells[col + 2].Value) == Convert.ToDecimal(completeRow[2]))) {
+                            //[quantity-sumrable_field]
                             completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row].Cells[col + 1].Value);
+                            //[quantity * cost]
                             completeRow[3] = Convert.ToDecimal(completeRow[1]) * Convert.ToDecimal(completeRow[2]);
-                            // clear
-                            view.Rows[row].Cells[col + 2].Value = DBNull.Value;
-                            view.Rows[row].Cells[col + 3].Value = DBNull.Value;
+                            //clear
+                            ClearValueFromDataGrid(view, cellsCount, row, col);
                         }
                     }
                 }
