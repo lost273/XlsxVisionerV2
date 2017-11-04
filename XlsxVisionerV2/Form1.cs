@@ -158,34 +158,42 @@ namespace XlsxVisionerV2 {
             return false;
         }
         //clear the data
-        private void ClearValueFromDataGrid(DataGridView view, int cellsCount, int row, int col) {
-            while (cellsCount > 0) {
-                view.Rows[row].Cells[col + cellsCount - 1].Value = DBNull.Value;
-                cellsCount--;
+        private void ClearValueFromDataGrid(DataGridView view, int cellsCount, int row, int col, string vector) {
+            if (vector == "horizontal") {
+                while (cellsCount > 0) {
+                    view.Rows[row].Cells[col + cellsCount - 1].Value = DBNull.Value;
+                    cellsCount--;
+                }
+            }
+            else {
+                while (cellsCount > 0) {
+                    view.Rows[row + cellsCount - 1].Cells[col].Value = DBNull.Value;
+                    cellsCount--;
+                }
             }
         }
         //data collection according to vector whom will be chose the user
         private void CollectVerticalData (DataGridView view, DataRow completeRow, int cellsCount) {
             //to not check unnecessary rows
-            int rowsForCheck = view.Columns.Count - cellsCount + 1;
-            for (int row = 0; row < view.Rows.Count; ++row) {
-                for (int col = 0; col < rowsForCheck; ++col) {
+            int rowsForCheck = view.Rows.Count - cellsCount + 1;
+            for (int col = 0; col < view.Columns.Count; ++col) {
+                for (int row = 0; row < rowsForCheck; ++row) {
                     object value = view.Rows[row].Cells[col].Value;
                     if ((IsDataNotEmpty(value)) &&
                         (!Decimal.TryParse(value.ToString(), out decimal result)) && (value.ToString() == completeRow[0].ToString())) {
                         if (cellsCount == 2) {
                             //[total-sumrable_field]
-                            completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row].Cells[col + 1].Value);
+                            completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row + 1].Cells[col].Value);
                             //clear
-                            ClearValueFromDataGrid(view, cellsCount, row, col);
+                            ClearValueFromDataGrid(view, cellsCount, row, col, "vertical");
                         }
-                        if ((cellsCount == 4) && (Convert.ToDecimal(view.Rows[row].Cells[col + 2].Value) == Convert.ToDecimal(completeRow[2]))) {
+                        if ((cellsCount == 4) && (Convert.ToDecimal(view.Rows[row + 2].Cells[col].Value) == Convert.ToDecimal(completeRow[2]))) {
                             //[quantity-sumrable_field]
-                            completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row].Cells[col + 1].Value);
+                            completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row + 1].Cells[col].Value);
                             //[quantity * cost]
                             completeRow[3] = Convert.ToDecimal(completeRow[1]) * Convert.ToDecimal(completeRow[2]);
                             //clear
-                            ClearValueFromDataGrid(view, cellsCount, row, col);
+                            ClearValueFromDataGrid(view, cellsCount, row, col, "vertical");
                         }
                     }
                 }
@@ -204,7 +212,7 @@ namespace XlsxVisionerV2 {
                             //[total-sumrable_field]
                             completeRow[1] = Convert.ToDecimal(completeRow[1]) + Convert.ToDecimal(view.Rows[row].Cells[col + 1].Value);
                             //clear
-                            ClearValueFromDataGrid(view, cellsCount, row, col);
+                            ClearValueFromDataGrid(view, cellsCount, row, col, "horizontal");
                         }
                         if ((cellsCount == 4) && (Convert.ToDecimal(view.Rows[row].Cells[col + 2].Value) == Convert.ToDecimal(completeRow[2]))) {
                             //[quantity-sumrable_field]
@@ -212,7 +220,7 @@ namespace XlsxVisionerV2 {
                             //[quantity * cost]
                             completeRow[3] = Convert.ToDecimal(completeRow[1]) * Convert.ToDecimal(completeRow[2]);
                             //clear
-                            ClearValueFromDataGrid(view, cellsCount, row, col);
+                            ClearValueFromDataGrid(view, cellsCount, row, col, "horizontal");
                         }
                     }
                 }
