@@ -182,9 +182,9 @@ namespace XlsxVisionerV2 {
             for (int col = 0; col < view.Columns.Count; ++col) {
                 for (int row = 0; row < rowsForCheck; ++row) {
                     object value = view.Rows[row].Cells[col].Value;
-                    if ((IsDataNotEmpty(value)) &&
-                        (!Decimal.TryParse(value.ToString(), out decimal result)) && (value.ToString() == completeRow[0].ToString())) {
-                        if ((cellsCount == 2) && (Decimal.TryParse(view.Rows[row + 1].Cells[col].Value.ToString(), out cellOne))) {
+                    if ((IsDataNotEmpty(value)) && (!Decimal.TryParse(value.ToString(), out decimal result)) && 
+                        (value.ToString() == completeRow[0].ToString()) && (Decimal.TryParse(view.Rows[row + 1].Cells[col].Value.ToString(), out cellOne))) {
+                        if (cellsCount == 2) {
                             //[total-sumrable_field]
                             completeRow[1] = Convert.ToDecimal(completeRow[1]) + cellOne;
                             //clear
@@ -213,9 +213,9 @@ namespace XlsxVisionerV2 {
             for (int row = 0; row < view.Rows.Count; ++row) {
                 for (int col = 0; col < columnsForCheck; ++col) {
                     object value = view.Rows[row].Cells[col].Value;
-                    if ((IsDataNotEmpty(value)) && 
-                        (!Decimal.TryParse(value.ToString(), out decimal result)) && (value.ToString() == completeRow[0].ToString())) {
-                        if ((cellsCount == 2) && (Decimal.TryParse(view.Rows[row].Cells[col + 1].Value.ToString(), out cellOne))) {
+                    if ((IsDataNotEmpty(value)) && (!Decimal.TryParse(value.ToString(), out decimal result)) && 
+                        (value.ToString() == completeRow[0].ToString()) && (Decimal.TryParse(view.Rows[row].Cells[col + 1].Value.ToString(), out cellOne))) {
+                        if (cellsCount == 2) {
                             //[total-sumrable_field]
                             completeRow[1] = Convert.ToDecimal(completeRow[1]) + cellOne;
                             //clear
