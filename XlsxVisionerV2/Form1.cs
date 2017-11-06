@@ -102,20 +102,22 @@ namespace XlsxVisionerV2 {
             if (dataGridViewOriginal.SelectedCells[0].ColumnIndex == dataGridViewOriginal.SelectedCells[1].ColumnIndex) {
                 //[vertical]
                 CollectVerticalData(dataGridViewOriginal, row, numberOfCells);
+                //collection all data
+                if (collectCheckBox.Checked == true) {
+
+                } else dataTableSelect.Rows.Add(row);
             }
             else {
                 //[horizontal]
                 CollectHorizontalData(dataGridViewOriginal, row, numberOfCells);
+                //collection all data
+                if (collectCheckBox.Checked == true) {
+
+                } else dataTableSelect.Rows.Add(row);
             }
-           
-            dataTableSelect.Rows.Add(row);
-            dataGridViewSelect.DataSource = dataTableSelect;
             // remove empty rows
             RemoveEmptyRows(dataGridViewOriginal);
-            //collection all iteration
-            if (collectCheckBox.Checked == true) {
-
-            }
+            dataGridViewSelect.DataSource = dataTableSelect;
         }
         // two cells pattern = [string - comparable_field][total-sumrable_field]
         // four cells pattern = [string - comparable_field][quantity-sumrable_field][cost][quantity * cost] 
