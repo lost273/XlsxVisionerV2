@@ -21,11 +21,11 @@ namespace XlsxVisionerV2 {
             dataGridViewSelect.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
         }
 
-        private void openButton_Click (object sender, EventArgs e) {
+        private void OpenButton_Click (object sender, EventArgs e) {
             openFileDialog1.ShowDialog();
         }
 
-        private void openFileDialog1_FileOk (object sender, CancelEventArgs e) {
+        private void OpenFileDialog1_FileOk (object sender, CancelEventArgs e) {
             string filePath = openFileDialog1.FileName;
             string extension = Path.GetExtension(filePath);
             string header = "NO";//rbHeaderYes.Checked ? "YES" : "NO";
@@ -77,7 +77,7 @@ namespace XlsxVisionerV2 {
             }
         }
         // move selected cells from 'original' to 'select' DataTable
-        private void selectButton_Click (object sender, EventArgs e) {
+        private void SelectButton_Click (object sender, EventArgs e) {
             DataRow row = dataTableSelect.NewRow();
             int numberOfCells = dataGridViewOriginal.SelectedCells.Count;
 
@@ -112,6 +112,10 @@ namespace XlsxVisionerV2 {
             dataGridViewSelect.DataSource = dataTableSelect;
             // remove empty rows
             RemoveEmptyRows(dataGridViewOriginal);
+            //collection all iteration
+            if (collectCheckBox.Checked == true) {
+
+            }
         }
         // two cells pattern = [string - comparable_field][total-sumrable_field]
         // four cells pattern = [string - comparable_field][quantity-sumrable_field][cost][quantity * cost] 

@@ -28,46 +28,49 @@
             this.openButton = new System.Windows.Forms.Button();
             this.selectButton = new System.Windows.Forms.Button();
             this.dataGridViewOriginal = new System.Windows.Forms.DataGridView();
+            this.collectCheckBox = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSelect)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewOriginal)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialog1_FileOk);
             // 
             // dataGridViewSelect
             // 
             this.dataGridViewSelect.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridViewSelect.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewSelect.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dataGridViewSelect.Location = new System.Drawing.Point(609, 0);
+            this.dataGridViewSelect.Location = new System.Drawing.Point(620, 0);
             this.dataGridViewSelect.Name = "dataGridViewSelect";
-            this.dataGridViewSelect.Size = new System.Drawing.Size(500, 444);
+            this.dataGridViewSelect.Size = new System.Drawing.Size(489, 444);
             this.dataGridViewSelect.TabIndex = 2;
             // 
             // openButton
             // 
             this.openButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.openButton.Location = new System.Drawing.Point(517, 12);
+            this.openButton.Location = new System.Drawing.Point(521, 12);
             this.openButton.Name = "openButton";
             this.openButton.Size = new System.Drawing.Size(75, 23);
             this.openButton.TabIndex = 0;
             this.openButton.Text = "Open";
             this.openButton.UseVisualStyleBackColor = true;
-            this.openButton.Click += new System.EventHandler(this.openButton_Click);
+            this.openButton.Click += new System.EventHandler(this.OpenButton_Click);
             // 
             // selectButton
             // 
             this.selectButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.selectButton.Location = new System.Drawing.Point(531, 41);
+            this.selectButton.Location = new System.Drawing.Point(6, 48);
             this.selectButton.Name = "selectButton";
-            this.selectButton.Size = new System.Drawing.Size(47, 57);
+            this.selectButton.Size = new System.Drawing.Size(95, 57);
             this.selectButton.TabIndex = 3;
             this.selectButton.Text = "Select\r\n>>";
             this.selectButton.UseVisualStyleBackColor = true;
-            this.selectButton.Click += new System.EventHandler(this.selectButton_Click);
+            this.selectButton.Click += new System.EventHandler(this.SelectButton_Click);
             // 
             // dataGridViewOriginal
             // 
@@ -79,20 +82,43 @@
             this.dataGridViewOriginal.Size = new System.Drawing.Size(500, 444);
             this.dataGridViewOriginal.TabIndex = 1;
             // 
+            // collectCheckBox
+            // 
+            this.collectCheckBox.AutoSize = true;
+            this.collectCheckBox.Location = new System.Drawing.Point(6, 19);
+            this.collectCheckBox.Name = "collectCheckBox";
+            this.collectCheckBox.Size = new System.Drawing.Size(95, 17);
+            this.collectCheckBox.TabIndex = 4;
+            this.collectCheckBox.Text = "Collect all data";
+            this.collectCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.selectButton);
+            this.groupBox1.Controls.Add(this.collectCheckBox);
+            this.groupBox1.Location = new System.Drawing.Point(506, 56);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(108, 111);
+            this.groupBox1.TabIndex = 5;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Collection";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1109, 444);
-            this.Controls.Add(this.selectButton);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dataGridViewOriginal);
             this.Controls.Add(this.openButton);
             this.Controls.Add(this.dataGridViewSelect);
-            this.MinimumSize = new System.Drawing.Size(1125, 0);
+            this.MinimumSize = new System.Drawing.Size(1125, 39);
             this.Name = "Form1";
             this.Text = "XlsxVisionerV2";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSelect)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewOriginal)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -103,6 +129,8 @@
         private System.Windows.Forms.Button openButton;
         private System.Windows.Forms.Button selectButton;
         private System.Windows.Forms.DataGridView dataGridViewOriginal;
+        private System.Windows.Forms.CheckBox collectCheckBox;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 
