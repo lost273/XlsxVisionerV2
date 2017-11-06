@@ -102,18 +102,20 @@ namespace XlsxVisionerV2 {
             if (dataGridViewOriginal.SelectedCells[0].ColumnIndex == dataGridViewOriginal.SelectedCells[1].ColumnIndex) {
                 //[vertical]
                 CollectVerticalData(dataGridViewOriginal, row, numberOfCells);
+                dataTableSelect.Rows.Add(row);
                 //collection all data
                 if (collectCheckBox.Checked == true) {
-
-                } else dataTableSelect.Rows.Add(row);
+                    CollectAllVerticalData(dataGridViewOriginal, numberOfCells);
+                }  
             }
             else {
                 //[horizontal]
                 CollectHorizontalData(dataGridViewOriginal, row, numberOfCells);
+                dataTableSelect.Rows.Add(row);
                 //collection all data
                 if (collectCheckBox.Checked == true) {
-
-                } else dataTableSelect.Rows.Add(row);
+                    CollectAllHorizontalData(dataGridViewOriginal, numberOfCells);
+                }  
             }
             // remove empty rows
             RemoveEmptyRows(dataGridViewOriginal);
@@ -239,6 +241,14 @@ namespace XlsxVisionerV2 {
                     }
                 }
             }
+        }
+        //all data collection according to vector
+        private void CollectAllVerticalData(DataGridView view, int cellsCount) {
+
+        }
+        //all data collection according to vector
+        private void CollectAllHorizontalData(DataGridView view, int cellsCount) {
+
         }
     }
 }
