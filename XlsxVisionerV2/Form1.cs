@@ -117,8 +117,6 @@ namespace XlsxVisionerV2 {
                     CollectAllHorizontalData(dataGridViewOriginal, numberOfCells);
                 }  
             }
-            // remove empty rows
-            RemoveEmptyRows(dataGridViewOriginal);
             dataGridViewSelect.DataSource = dataTableSelect;
         }
         // two cells pattern = [string - comparable_field][total-sumrable_field]
@@ -210,6 +208,8 @@ namespace XlsxVisionerV2 {
                     }
                 }
             }
+            // remove empty rows
+            RemoveEmptyRows(view);
         }
         //data collection according to vector whom will be chose the user
         private void CollectHorizontalData (DataGridView view, DataRow completeRow, int cellsCount) {
@@ -241,6 +241,8 @@ namespace XlsxVisionerV2 {
                     }
                 }
             }
+            // remove empty rows
+            RemoveEmptyRows(view);
         }
         //all data collection according to vector
         private void CollectAllVerticalData(DataGridView view, int cellsCount) {
@@ -248,7 +250,24 @@ namespace XlsxVisionerV2 {
         }
         //all data collection according to vector
         private void CollectAllHorizontalData(DataGridView view, int cellsCount) {
-
+            DataRow checkRow = dataTableSelect.NewRow();
+            //to not check unnecessary columns
+            int columnsForCheck = view.Columns.Count - cellsCount + 1;
+            for (int row = 0; row < view.Rows.Count; ++row) {
+                for (int col = 0; col < columnsForCheck; ++col) {
+                    //make row
+                    for (int colIndex = 0; colIndex < cellsCount; ++colIndex) {
+                        checkRow[colIndex] = view.Rows[row].Cells[col + colIndex].Value;
+                    }
+                    //determine accordance
+                    if (AccordanceWithPattern(cellsCount, checkRow)) {
+                        CollectHorizontalData(view, checkRow, cellsCount);
+                        DataRow checkRowClone = dataTableSelect.NewRow();
+                        checkRowClone.ItemArray = (object[])checkRow.ItemArray.Clone();
+                        dataTableSelect.Rows.Add(checkRowClone);
+                    }
+                }
+            }
         }
     }
 }
