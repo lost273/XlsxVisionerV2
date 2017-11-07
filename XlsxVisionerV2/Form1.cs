@@ -79,6 +79,7 @@ namespace XlsxVisionerV2 {
         // move selected cells from 'original' to 'select' DataTable
         private void SelectButton_Click (object sender, EventArgs e) {
             DataRow row = dataTableSelect.NewRow();
+            CollectProgressBar.Value = 0;
             int numberOfCells = dataGridViewOriginal.SelectedCells.Count;
 
             for (int i = 0; i < numberOfCells; i++) {
@@ -259,8 +260,14 @@ namespace XlsxVisionerV2 {
                     }
                     //check on if current pattern not contain in other pattern
                     bool notContainOtherData = false;
-                    if (cellsCount == 2) && (view.Columns.Count < col + cellsCount)
+                    if ((view.Columns.Count > col + cellsCount) && (IsDataNotEmpty(view.Rows[row].Cells[col + cellsCount].Value))) {
+                        if (!Decimal.TryParse(view.Rows[row].Cells[col + cellsCount].Value.ToString(), out decimal result)) {
                             notContainOtherData = true;
+                        }
+                    }
+                    else {
+                        notContainOtherData = true;
+                    }
                     //determine accordance
                     if ((AccordanceWithPattern(cellsCount, checkRow)) && (IsDataNotEmpty(checkRow[0])) && (notContainOtherData)) {
                         //clear
