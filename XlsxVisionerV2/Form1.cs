@@ -312,7 +312,13 @@ namespace XlsxVisionerV2 {
         }
 
         private void RenameButton_Click(object sender, EventArgs e) {
-            dataGridViewSelect.Columns[oldnameTextBox.Text].HeaderText = newnameTextBox.Text;
+            try {
+                dataGridViewSelect.Columns[oldnameTextBox.Text].HeaderText = newnameTextBox.Text;
+            }
+            catch (Exception) {
+
+                MessageBox.Show("Wrong № of the column!"); ;
+            }
         }
     }
 }

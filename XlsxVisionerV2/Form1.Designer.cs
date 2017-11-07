@@ -38,6 +38,8 @@
             this.oldnameTextBox = new System.Windows.Forms.TextBox();
             this.newnameTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.printButton = new System.Windows.Forms.Button();
+            this.diagramButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSelect)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewOriginal)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -181,9 +183,31 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(18, 16);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(54, 13);
+            this.label3.Size = new System.Drawing.Size(67, 13);
             this.label3.TabIndex = 1;
-            this.label3.Text = "Old Name";
+            this.label3.Text = "№ of column";
+            // 
+            // printButton
+            // 
+            this.printButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.printButton.Location = new System.Drawing.Point(521, 364);
+            this.printButton.Name = "printButton";
+            this.printButton.Size = new System.Drawing.Size(75, 23);
+            this.printButton.TabIndex = 0;
+            this.printButton.Text = "Print";
+            this.printButton.UseVisualStyleBackColor = true;
+            this.printButton.Click += new System.EventHandler(this.OpenButton_Click);
+            // 
+            // diagramButton
+            // 
+            this.diagramButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.diagramButton.Location = new System.Drawing.Point(521, 393);
+            this.diagramButton.Name = "diagramButton";
+            this.diagramButton.Size = new System.Drawing.Size(75, 23);
+            this.diagramButton.TabIndex = 0;
+            this.diagramButton.Text = "Diagram";
+            this.diagramButton.UseVisualStyleBackColor = true;
+            this.diagramButton.Click += new System.EventHandler(this.OpenButton_Click);
             // 
             // Form1
             // 
@@ -195,6 +219,8 @@
             this.Controls.Add(this.CollectProgressBar);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dataGridViewOriginal);
+            this.Controls.Add(this.diagramButton);
+            this.Controls.Add(this.printButton);
             this.Controls.Add(this.openButton);
             this.Controls.Add(this.dataGridViewSelect);
             this.MinimumSize = new System.Drawing.Size(1125, 39);
@@ -227,6 +253,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox newnameTextBox;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button printButton;
+        private System.Windows.Forms.Button diagramButton;
     }
 }
 
