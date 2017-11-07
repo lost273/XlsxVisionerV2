@@ -249,8 +249,9 @@ namespace XlsxVisionerV2 {
         //all data collection according to vector
         private void CollectAllHorizontalData(DataGridView view, int cellsCount) {
             DataRow checkRow = dataTableSelect.NewRow();
+            CollectProgressBar.Maximum = view.Rows.Count;
             //to not check unnecessary columns
-            for (int row = 0; row < view.Rows.Count; ++row) {
+            for (int row = 0; row < view.Rows.Count; ++row, ++CollectProgressBar.Value) {
                 for (int col = 0; col < (view.Columns.Count - cellsCount + 1); ++col) {
                     //make row
                     for (int colIndex = 0; colIndex < cellsCount; ++colIndex) {

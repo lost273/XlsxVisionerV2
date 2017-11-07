@@ -30,6 +30,8 @@
             this.dataGridViewOriginal = new System.Windows.Forms.DataGridView();
             this.collectCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.CollectProgressBar = new System.Windows.Forms.ProgressBar();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSelect)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewOriginal)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -103,11 +105,29 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Collection";
             // 
+            // CollectProgressBar
+            // 
+            this.CollectProgressBar.Location = new System.Drawing.Point(512, 186);
+            this.CollectProgressBar.Name = "CollectProgressBar";
+            this.CollectProgressBar.Size = new System.Drawing.Size(95, 23);
+            this.CollectProgressBar.TabIndex = 6;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(518, 170);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(82, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Collect progress";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1109, 444);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.CollectProgressBar);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dataGridViewOriginal);
             this.Controls.Add(this.openButton);
@@ -120,6 +140,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -131,6 +152,8 @@
         private System.Windows.Forms.DataGridView dataGridViewOriginal;
         private System.Windows.Forms.CheckBox collectCheckBox;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ProgressBar CollectProgressBar;
+        private System.Windows.Forms.Label label1;
     }
 }
 
