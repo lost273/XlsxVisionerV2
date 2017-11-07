@@ -245,14 +245,44 @@ namespace XlsxVisionerV2 {
         }
         //all data collection according to vector
         private void CollectAllVerticalData(DataGridView view, int cellsCount) {
+            DataRow checkRow = dataTableSelect.NewRow();
+            CollectProgressBar.Maximum = view.Columns.Count;
+            for (int col = 0; col < view.Columns.Count; ++col, ++CollectProgressBar.Value) {
+                //to not check unnecessary rows
+                for (int row = 0; row < (view.Rows.Count - cellsCount + 1); ++row) {
+                    //make row
+                    for (int rowIndex = 0; rowIndex < cellsCount; ++rowIndex) {
+                        checkRow[rowIndex] = view.Rows[row + rowIndex].Cells[col].Value;
+                    }
+                    //check on if current pattern not contain in other pattern
+                    bool notContainOtherData = false;
+                    if ((view.Rows.Count > row + cellsCount) && (IsDataNotEmpty(view.Rows[row + cellsCount].Cells[col].Value))) {
+                        if (!Decimal.TryParse(view.Rows[row + cellsCount].Cells[col].Value.ToString(), out decimal result)) {
+                            notContainOtherData = true;
+                        }
+                    }
+                    else {
+                        notContainOtherData = true;
+                    }
+                    //determine accordance
+                    if ((AccordanceWithPattern(cellsCount, checkRow)) && (IsDataNotEmpty(checkRow[0])) && (notContainOtherData)) {
+                        //clear
+                        ClearValueFromDataGrid(view, cellsCount, row, col, "vertical");
+                        CollectVerticalData(view, checkRow, cellsCount);
+                        DataRow checkRowClone = dataTableSelect.NewRow();
+                        checkRowClone.ItemArray = (object[])checkRow.ItemArray.Clone();
+                        dataTableSelect.Rows.Add(checkRowClone);
+                    }
+                }
+            }
 
         }
         //all data collection according to vector
         private void CollectAllHorizontalData(DataGridView view, int cellsCount) {
             DataRow checkRow = dataTableSelect.NewRow();
             CollectProgressBar.Maximum = view.Rows.Count;
-            //to not check unnecessary columns
             for (int row = 0; row < view.Rows.Count; ++row, ++CollectProgressBar.Value) {
+                //to not check unnecessary columns
                 for (int col = 0; col < (view.Columns.Count - cellsCount + 1); ++col) {
                     //make row
                     for (int colIndex = 0; colIndex < cellsCount; ++colIndex) {
@@ -279,6 +309,10 @@ namespace XlsxVisionerV2 {
                     }
                 }
             }
+        }
+
+        private void RenameButton_Click(object sender, EventArgs e) {
+            dataGridViewSelect.Columns[oldnameTextBox.Text].HeaderText = newnameTextBox.Text;
         }
     }
 }

@@ -32,9 +32,16 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.CollectProgressBar = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.renameButton = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.oldnameTextBox = new System.Windows.Forms.TextBox();
+            this.newnameTextBox = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSelect)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewOriginal)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // openFileDialog1
@@ -70,7 +77,7 @@
             this.selectButton.Name = "selectButton";
             this.selectButton.Size = new System.Drawing.Size(95, 57);
             this.selectButton.TabIndex = 3;
-            this.selectButton.Text = "Select\r\n>>";
+            this.selectButton.Text = "Collect\r\n>>";
             this.selectButton.UseVisualStyleBackColor = true;
             this.selectButton.Click += new System.EventHandler(this.SelectButton_Click);
             // 
@@ -121,11 +128,69 @@
             this.label1.TabIndex = 7;
             this.label1.Text = "Collect progress";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.newnameTextBox);
+            this.groupBox2.Controls.Add(this.oldnameTextBox);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.renameButton);
+            this.groupBox2.Location = new System.Drawing.Point(506, 215);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(108, 132);
+            this.groupBox2.TabIndex = 8;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Rename column";
+            // 
+            // renameButton
+            // 
+            this.renameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.renameButton.Location = new System.Drawing.Point(15, 103);
+            this.renameButton.Name = "renameButton";
+            this.renameButton.Size = new System.Drawing.Size(75, 23);
+            this.renameButton.TabIndex = 0;
+            this.renameButton.Text = "Rename";
+            this.renameButton.UseVisualStyleBackColor = true;
+            this.renameButton.Click += new System.EventHandler(this.RenameButton_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(18, 61);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(60, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "New Name";
+            // 
+            // oldnameTextBox
+            // 
+            this.oldnameTextBox.Location = new System.Drawing.Point(6, 32);
+            this.oldnameTextBox.Name = "oldnameTextBox";
+            this.oldnameTextBox.Size = new System.Drawing.Size(95, 20);
+            this.oldnameTextBox.TabIndex = 2;
+            // 
+            // newnameTextBox
+            // 
+            this.newnameTextBox.Location = new System.Drawing.Point(6, 77);
+            this.newnameTextBox.Name = "newnameTextBox";
+            this.newnameTextBox.Size = new System.Drawing.Size(95, 20);
+            this.newnameTextBox.TabIndex = 2;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(18, 16);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(54, 13);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Old Name";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1109, 444);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CollectProgressBar);
             this.Controls.Add(this.groupBox1);
@@ -139,6 +204,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewOriginal)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -154,6 +221,12 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ProgressBar CollectProgressBar;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button renameButton;
+        private System.Windows.Forms.TextBox oldnameTextBox;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox newnameTextBox;
+        private System.Windows.Forms.Label label3;
     }
 }
 
