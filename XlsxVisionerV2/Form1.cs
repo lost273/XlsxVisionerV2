@@ -257,8 +257,12 @@ namespace XlsxVisionerV2 {
                     for (int colIndex = 0; colIndex < cellsCount; ++colIndex) {
                         checkRow[colIndex] = view.Rows[row].Cells[col + colIndex].Value;
                     }
+                    //check on if current pattern not contain in other pattern
+                    bool notContainOtherData = false;
+                    if (cellsCount == 2) && (view.Columns.Count < col + cellsCount)
+                            notContainOtherData = true;
                     //determine accordance
-                    if (AccordanceWithPattern(cellsCount, checkRow)) {
+                    if ((AccordanceWithPattern(cellsCount, checkRow)) && (IsDataNotEmpty(checkRow[0])) && (notContainOtherData)) {
                         //clear
                         ClearValueFromDataGrid(view, cellsCount, row, col, "horizontal");
                         CollectHorizontalData(view, checkRow, cellsCount);
