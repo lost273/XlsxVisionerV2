@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent () {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.dataGridViewSelect = new System.Windows.Forms.DataGridView();
             this.openButton = new System.Windows.Forms.Button();
@@ -33,13 +34,16 @@
             this.CollectProgressBar = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.renameButton = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.oldnameTextBox = new System.Windows.Forms.TextBox();
             this.newnameTextBox = new System.Windows.Forms.TextBox();
+            this.oldnameTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.renameButton = new System.Windows.Forms.Button();
             this.printButton = new System.Windows.Forms.Button();
             this.diagramButton = new System.Windows.Forms.Button();
+            this.tablePrintDialog = new System.Windows.Forms.PrintDialog();
+            this.tablePrintPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
+            this.tablePrintDocument = new System.Drawing.Printing.PrintDocument();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSelect)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewOriginal)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -144,6 +148,38 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Rename column";
             // 
+            // newnameTextBox
+            // 
+            this.newnameTextBox.Location = new System.Drawing.Point(6, 77);
+            this.newnameTextBox.Name = "newnameTextBox";
+            this.newnameTextBox.Size = new System.Drawing.Size(95, 20);
+            this.newnameTextBox.TabIndex = 2;
+            // 
+            // oldnameTextBox
+            // 
+            this.oldnameTextBox.Location = new System.Drawing.Point(6, 32);
+            this.oldnameTextBox.Name = "oldnameTextBox";
+            this.oldnameTextBox.Size = new System.Drawing.Size(95, 20);
+            this.oldnameTextBox.TabIndex = 2;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(18, 16);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(67, 13);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "№ of column";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(18, 61);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(60, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "New Name";
+            // 
             // renameButton
             // 
             this.renameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -155,38 +191,6 @@
             this.renameButton.UseVisualStyleBackColor = true;
             this.renameButton.Click += new System.EventHandler(this.RenameButton_Click);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(18, 61);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "New Name";
-            // 
-            // oldnameTextBox
-            // 
-            this.oldnameTextBox.Location = new System.Drawing.Point(6, 32);
-            this.oldnameTextBox.Name = "oldnameTextBox";
-            this.oldnameTextBox.Size = new System.Drawing.Size(95, 20);
-            this.oldnameTextBox.TabIndex = 2;
-            // 
-            // newnameTextBox
-            // 
-            this.newnameTextBox.Location = new System.Drawing.Point(6, 77);
-            this.newnameTextBox.Name = "newnameTextBox";
-            this.newnameTextBox.Size = new System.Drawing.Size(95, 20);
-            this.newnameTextBox.TabIndex = 2;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(18, 16);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 13);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "№ of column";
-            // 
             // printButton
             // 
             this.printButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -196,7 +200,7 @@
             this.printButton.TabIndex = 0;
             this.printButton.Text = "Print";
             this.printButton.UseVisualStyleBackColor = true;
-            this.printButton.Click += new System.EventHandler(this.OpenButton_Click);
+            this.printButton.Click += new System.EventHandler(this.PrintButton_Click);
             // 
             // diagramButton
             // 
@@ -208,6 +212,26 @@
             this.diagramButton.Text = "Diagram";
             this.diagramButton.UseVisualStyleBackColor = true;
             this.diagramButton.Click += new System.EventHandler(this.OpenButton_Click);
+            // 
+            // tablePrintDialog
+            // 
+            this.tablePrintDialog.Document = this.tablePrintDocument;
+            this.tablePrintDialog.UseEXDialog = true;
+            // 
+            // tablePrintPreviewDialog
+            // 
+            this.tablePrintPreviewDialog.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.tablePrintPreviewDialog.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.tablePrintPreviewDialog.ClientSize = new System.Drawing.Size(400, 300);
+            this.tablePrintPreviewDialog.Document = this.tablePrintDocument;
+            this.tablePrintPreviewDialog.Enabled = true;
+            this.tablePrintPreviewDialog.Icon = ((System.Drawing.Icon)(resources.GetObject("tablePrintPreviewDialog.Icon")));
+            this.tablePrintPreviewDialog.Name = "tablePrintPreviewDialog";
+            this.tablePrintPreviewDialog.Visible = false;
+            // 
+            // tablePrintDocument
+            // 
+            this.tablePrintDocument.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.tablePrintDocument_PrintPage);
             // 
             // Form1
             // 
@@ -255,6 +279,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button printButton;
         private System.Windows.Forms.Button diagramButton;
+        private System.Windows.Forms.PrintDialog tablePrintDialog;
+        private System.Windows.Forms.PrintPreviewDialog tablePrintPreviewDialog;
+        private System.Drawing.Printing.PrintDocument tablePrintDocument;
     }
 }
 

@@ -183,6 +183,7 @@ namespace XlsxVisionerV2 {
         }
         //data collection according to vector whom will be chose the user
         private void CollectVerticalData (DataGridView view, DataRow completeRow, int cellsCount) {
+            decimal result;
             //to not check unnecessary rows
             int rowsForCheck = view.Rows.Count - cellsCount + 1;
             decimal cellOne = 0;
@@ -191,7 +192,7 @@ namespace XlsxVisionerV2 {
             for (int col = 0; col < view.Columns.Count; ++col) {
                 for (int row = 0; row < rowsForCheck; ++row) {
                     object value = view.Rows[row].Cells[col].Value;
-                    if ((IsDataNotEmpty(value)) && (!Decimal.TryParse(value.ToString(), out decimal result)) && 
+                    if ((IsDataNotEmpty(value)) && (!Decimal.TryParse(value.ToString(), out result)) && 
                         (value.ToString() == completeRow[0].ToString()) && (Decimal.TryParse(view.Rows[row + 1].Cells[col].Value.ToString(), out cellOne))) {
                         if (cellsCount == 2) {
                             //[total-sumrable_field]
@@ -214,6 +215,7 @@ namespace XlsxVisionerV2 {
         }
         //data collection according to vector whom will be chose the user
         private void CollectHorizontalData (DataGridView view, DataRow completeRow, int cellsCount) {
+            decimal result;
             //to not check unnecessary columns
             int columnsForCheck = view.Columns.Count - cellsCount + 1;
             decimal cellOne = 0;
@@ -222,7 +224,7 @@ namespace XlsxVisionerV2 {
             for (int row = 0; row < view.Rows.Count; ++row) {
                 for (int col = 0; col < columnsForCheck; ++col) {
                     object value = view.Rows[row].Cells[col].Value;
-                    if ((IsDataNotEmpty(value)) && (!Decimal.TryParse(value.ToString(), out decimal result)) && 
+                    if ((IsDataNotEmpty(value)) && (!Decimal.TryParse(value.ToString(), out result)) && 
                         (value.ToString() == completeRow[0].ToString()) && (Decimal.TryParse(view.Rows[row].Cells[col + 1].Value.ToString(), out cellOne))) {
                         if (cellsCount == 2) {
                             //[total-sumrable_field]
@@ -245,6 +247,7 @@ namespace XlsxVisionerV2 {
         }
         //all data collection according to vector
         private void CollectAllVerticalData(DataGridView view, int cellsCount) {
+            decimal result;
             DataRow checkRow = dataTableSelect.NewRow();
             CollectProgressBar.Maximum = view.Columns.Count;
             for (int col = 0; col < view.Columns.Count; ++col, ++CollectProgressBar.Value) {
@@ -257,7 +260,7 @@ namespace XlsxVisionerV2 {
                     //check on if current pattern not contain in other pattern
                     bool notContainOtherData = false;
                     if ((view.Rows.Count > row + cellsCount) && (IsDataNotEmpty(view.Rows[row + cellsCount].Cells[col].Value))) {
-                        if (!Decimal.TryParse(view.Rows[row + cellsCount].Cells[col].Value.ToString(), out decimal result)) {
+                        if (!Decimal.TryParse(view.Rows[row + cellsCount].Cells[col].Value.ToString(), out result)) {
                             notContainOtherData = true;
                         }
                     }
@@ -279,6 +282,7 @@ namespace XlsxVisionerV2 {
         }
         //all data collection according to vector
         private void CollectAllHorizontalData(DataGridView view, int cellsCount) {
+            decimal result;
             DataRow checkRow = dataTableSelect.NewRow();
             CollectProgressBar.Maximum = view.Rows.Count;
             for (int row = 0; row < view.Rows.Count; ++row, ++CollectProgressBar.Value) {
@@ -291,7 +295,7 @@ namespace XlsxVisionerV2 {
                     //check on if current pattern not contain in other pattern
                     bool notContainOtherData = false;
                     if ((view.Columns.Count > col + cellsCount) && (IsDataNotEmpty(view.Rows[row].Cells[col + cellsCount].Value))) {
-                        if (!Decimal.TryParse(view.Rows[row].Cells[col + cellsCount].Value.ToString(), out decimal result)) {
+                        if (!Decimal.TryParse(view.Rows[row].Cells[col + cellsCount].Value.ToString(), out result)) {
                             notContainOtherData = true;
                         }
                     }
@@ -318,6 +322,90 @@ namespace XlsxVisionerV2 {
             catch (Exception) {
 
                 MessageBox.Show("Wrong № of the column!"); ;
+            }
+        }
+
+        private void PrintButton_Click (object sender, EventArgs e) {
+            tablePrintDialog.ShowDialog();
+            tablePrintPreviewDialog.ShowDialog();
+        }
+
+        private void tablePrintDocument_PrintPage (object sender, System.Drawing.Printing.PrintPageEventArgs e) {
+            int z = 0;
+            int rowCounter = 0;
+            
+
+            int width = 500 / (dataGridViewSelect.Columns.Count - 1); // ширина ячейки
+            int realwidth = 100; // общая ширина
+            int height = 15; // высота строки
+
+            int realheight = 60; // общая высота
+
+
+            // Рисуем название файла
+            if (rowCounter == 0) {
+                e.Graphics.FillRectangle(Brushes.ForestGreen, realwidth, realheight, width, height);
+                e.Graphics.DrawRectangle(Pens.Black, realwidth, realheight, width, height);
+                e.Graphics.DrawString(openFileDialog1.SafeFileName, dataGridViewSelect.Font, Brushes.Black, realwidth, realheight);
+                
+                realheight = realheight + height;
+            }
+
+            // Рисуем названия колонок
+            for (z = 0; z < dataGridViewSelect.Columns.Count; z++) {
+                e.Graphics.FillRectangle(Brushes.RoyalBlue, realwidth, realheight, width, height);
+                e.Graphics.DrawRectangle(Pens.Black, realwidth, realheight, width, height);
+
+                e.Graphics.DrawString(dataGridViewSelect.Columns[z].HeaderText, dataGridViewSelect.Font, Brushes.Black, realwidth, realheight);
+
+                realwidth = realwidth + width;
+            }
+            realheight = realheight + height;
+
+            // Рисуем остальную таблицу
+            while (rowCounter < dataGridViewSelect.Rows.Count) {
+                realwidth = 100;
+
+                if (dataGridViewSelect.Rows[rowCounter].Cells[0].Value == null) {
+                    dataGridViewSelect.Rows[rowCounter].Cells[0].Value = "";
+                }
+                e.Graphics.FillRectangle(Brushes.AliceBlue, realwidth, realheight, width, height);
+                e.Graphics.DrawRectangle(Pens.Black, realwidth, realheight, width, height);
+                e.Graphics.DrawString(dataGridViewSelect.Rows[rowCounter].Cells[0].Value.ToString(), dataGridViewSelect.Font, Brushes.Black, realwidth, realheight);
+                realwidth = realwidth + width;
+
+                if (dataGridViewSelect.Rows[rowCounter].Cells[1].Value == null) {
+                    dataGridViewSelect.Rows[rowCounter].Cells[1].Value = "";
+                }
+                e.Graphics.FillRectangle(Brushes.AliceBlue, realwidth, realheight, width, height);
+                e.Graphics.DrawRectangle(Pens.Black, realwidth, realheight, width, height);
+                e.Graphics.DrawString(dataGridViewSelect.Rows[rowCounter].Cells[1].Value.ToString(), dataGridViewSelect.Font, Brushes.Black, realwidth, realheight);
+                realwidth = realwidth + width;
+
+                if (dataGridViewSelect.Rows[rowCounter].Cells[2].Value == null) {
+                    dataGridViewSelect.Rows[rowCounter].Cells[2].Value = "";
+                }
+                e.Graphics.FillRectangle(Brushes.AliceBlue, realwidth, realheight, width, height);
+                e.Graphics.DrawRectangle(Pens.Black, realwidth, realheight, width, height);
+                e.Graphics.DrawString(dataGridViewSelect.Rows[rowCounter].Cells[2].Value.ToString(), dataGridViewSelect.Font, Brushes.Black, realwidth, realheight);
+                realwidth = realwidth + width;
+
+                if (dataGridViewSelect.Rows[rowCounter].Cells[3].Value == null) {
+                    dataGridViewSelect.Rows[rowCounter].Cells[3].Value = "";
+                }
+                e.Graphics.FillRectangle(Brushes.AliceBlue, realwidth, realheight, width, height);
+                e.Graphics.DrawRectangle(Pens.Black, realwidth, realheight, width, height);
+                e.Graphics.DrawString(dataGridViewSelect.Rows[rowCounter].Cells[3].Value.ToString(), dataGridViewSelect.Font, Brushes.Black, realwidth, realheight);
+                realwidth = realwidth + width;
+
+                ++rowCounter;
+                realheight = realheight + height;
+
+                //если 1000 пикселей уже напечатано - переводим на новый лист
+                if (realheight >= 1000) { e.HasMorePages = true; break; }
+                // если 1000 пикселей не напечатано, а таблица закончилась
+                if ((realheight < 1000) && (rowCounter >= dataGridViewSelect.Rows.Count)) { e.HasMorePages = false; rowCounter = 0; break; }
+
             }
         }
     }
