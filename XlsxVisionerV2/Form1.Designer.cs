@@ -215,7 +215,6 @@
             // 
             // tablePrintDialog
             // 
-            this.tablePrintDialog.Document = this.tablePrintDocument;
             this.tablePrintDialog.UseEXDialog = true;
             // 
             // tablePrintPreviewDialog

@@ -329,14 +329,18 @@ namespace XlsxVisionerV2 {
         }
 
         private void PrintButton_Click (object sender, EventArgs e) {
-            rowCounter = 0;
             tablePrintDocument.DocumentName = openFileDialog1.SafeFileName;
+            tablePrintDialog.Document = tablePrintDocument;
+            //tablePrintPreviewDialog.Document = tablePrintDocument;
             tablePrintDialog.ShowDialog();
             tablePrintPreviewDialog.ShowDialog();
+            //DialogResult result = tablePrintPreviewDialog.ShowDialog();
+            //if (result == DialogResult.OK) {
+            //    tablePrintDocument.Print();
+            //}
         }
 
         private void tablePrintDocument_PrintPage (object sender, System.Drawing.Printing.PrintPageEventArgs e) {
-            int z = 0;
             int width = 620 / (dataGridViewSelect.Columns.Count); //cell width
             int realwidth = 100; //total width
             int height = 15; // row height
@@ -353,10 +357,9 @@ namespace XlsxVisionerV2 {
             }
 
             //draw a name of cells
-            for (z = 0; z < dataGridViewSelect.Columns.Count; z++) {
+            for (int z = 0; z < dataGridViewSelect.Columns.Count; z++) {
                 e.Graphics.FillRectangle(Brushes.RoyalBlue, realwidth, realheight, width, height);
                 e.Graphics.DrawRectangle(Pens.Black, realwidth, realheight, width, height);
-
                 e.Graphics.DrawString(dataGridViewSelect.Columns[z].HeaderText, dataGridViewSelect.Font, Brushes.Black, realwidth, realheight);
 
                 realwidth = realwidth + width;
