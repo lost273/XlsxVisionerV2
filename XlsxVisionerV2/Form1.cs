@@ -15,6 +15,9 @@ namespace XlsxVisionerV2 {
         private string Excel03ConString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties='Excel 8.0;HDR={1};IMEX=1'";
         private string Excel07ConString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties='Excel 8.0;HDR={1};IMEX=1'";
         DataTable dataTableSelect = new DataTable();
+        //counter for drawing the table
+        int rowCounter = 0;
+
         public Form1 () {
             InitializeComponent();
             dataGridViewOriginal.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
@@ -326,23 +329,21 @@ namespace XlsxVisionerV2 {
         }
 
         private void PrintButton_Click (object sender, EventArgs e) {
+            rowCounter = 0;
+            tablePrintDocument.DocumentName = openFileDialog1.SafeFileName;
             tablePrintDialog.ShowDialog();
             tablePrintPreviewDialog.ShowDialog();
         }
 
         private void tablePrintDocument_PrintPage (object sender, System.Drawing.Printing.PrintPageEventArgs e) {
             int z = 0;
-            int rowCounter = 0;
-            
-
-            int width = 500 / (dataGridViewSelect.Columns.Count - 1); // ширина ячейки
-            int realwidth = 100; // общая ширина
-            int height = 15; // высота строки
-
-            int realheight = 60; // общая высота
+            int width = 620 / (dataGridViewSelect.Columns.Count); //cell width
+            int realwidth = 100; //total width
+            int height = 15; // row height
+            int realheight = 60; //total height
 
 
-            // Рисуем название файла
+            //draw a name of the file
             if (rowCounter == 0) {
                 e.Graphics.FillRectangle(Brushes.ForestGreen, realwidth, realheight, width, height);
                 e.Graphics.DrawRectangle(Pens.Black, realwidth, realheight, width, height);
@@ -351,7 +352,7 @@ namespace XlsxVisionerV2 {
                 realheight = realheight + height;
             }
 
-            // Рисуем названия колонок
+            //draw a name of cells
             for (z = 0; z < dataGridViewSelect.Columns.Count; z++) {
                 e.Graphics.FillRectangle(Brushes.RoyalBlue, realwidth, realheight, width, height);
                 e.Graphics.DrawRectangle(Pens.Black, realwidth, realheight, width, height);
@@ -362,48 +363,25 @@ namespace XlsxVisionerV2 {
             }
             realheight = realheight + height;
 
-            // Рисуем остальную таблицу
-            while (rowCounter < dataGridViewSelect.Rows.Count) {
+            //draw the table
+            while (rowCounter < dataGridViewSelect.Rows.Count - 1) {
                 realwidth = 100;
-
-                if (dataGridViewSelect.Rows[rowCounter].Cells[0].Value == null) {
-                    dataGridViewSelect.Rows[rowCounter].Cells[0].Value = "";
+                for (int cellNumber = 0; cellNumber < dataGridViewSelect.Columns.Count; cellNumber++) {
+                    if (dataGridViewSelect.Rows[rowCounter].Cells[cellNumber].Value == null) {
+                        dataGridViewSelect.Rows[rowCounter].Cells[cellNumber].Value = "";
+                    }
+                    e.Graphics.FillRectangle(Brushes.AliceBlue, realwidth, realheight, width, height);
+                    e.Graphics.DrawRectangle(Pens.Black, realwidth, realheight, width, height);
+                    e.Graphics.DrawString(dataGridViewSelect.Rows[rowCounter].Cells[cellNumber].Value.ToString(), dataGridViewSelect.Font, Brushes.Black, realwidth, realheight);
+                    realwidth = realwidth + width;
                 }
-                e.Graphics.FillRectangle(Brushes.AliceBlue, realwidth, realheight, width, height);
-                e.Graphics.DrawRectangle(Pens.Black, realwidth, realheight, width, height);
-                e.Graphics.DrawString(dataGridViewSelect.Rows[rowCounter].Cells[0].Value.ToString(), dataGridViewSelect.Font, Brushes.Black, realwidth, realheight);
-                realwidth = realwidth + width;
-
-                if (dataGridViewSelect.Rows[rowCounter].Cells[1].Value == null) {
-                    dataGridViewSelect.Rows[rowCounter].Cells[1].Value = "";
-                }
-                e.Graphics.FillRectangle(Brushes.AliceBlue, realwidth, realheight, width, height);
-                e.Graphics.DrawRectangle(Pens.Black, realwidth, realheight, width, height);
-                e.Graphics.DrawString(dataGridViewSelect.Rows[rowCounter].Cells[1].Value.ToString(), dataGridViewSelect.Font, Brushes.Black, realwidth, realheight);
-                realwidth = realwidth + width;
-
-                if (dataGridViewSelect.Rows[rowCounter].Cells[2].Value == null) {
-                    dataGridViewSelect.Rows[rowCounter].Cells[2].Value = "";
-                }
-                e.Graphics.FillRectangle(Brushes.AliceBlue, realwidth, realheight, width, height);
-                e.Graphics.DrawRectangle(Pens.Black, realwidth, realheight, width, height);
-                e.Graphics.DrawString(dataGridViewSelect.Rows[rowCounter].Cells[2].Value.ToString(), dataGridViewSelect.Font, Brushes.Black, realwidth, realheight);
-                realwidth = realwidth + width;
-
-                if (dataGridViewSelect.Rows[rowCounter].Cells[3].Value == null) {
-                    dataGridViewSelect.Rows[rowCounter].Cells[3].Value = "";
-                }
-                e.Graphics.FillRectangle(Brushes.AliceBlue, realwidth, realheight, width, height);
-                e.Graphics.DrawRectangle(Pens.Black, realwidth, realheight, width, height);
-                e.Graphics.DrawString(dataGridViewSelect.Rows[rowCounter].Cells[3].Value.ToString(), dataGridViewSelect.Font, Brushes.Black, realwidth, realheight);
-                realwidth = realwidth + width;
 
                 ++rowCounter;
                 realheight = realheight + height;
 
-                //если 1000 пикселей уже напечатано - переводим на новый лист
+                //make the new list, if 1000 pixels drawn
                 if (realheight >= 1000) { e.HasMorePages = true; break; }
-                // если 1000 пикселей не напечатано, а таблица закончилась
+                //table has got the end, but 1000 pixels didn't print
                 if ((realheight < 1000) && (rowCounter >= dataGridViewSelect.Rows.Count)) { e.HasMorePages = false; rowCounter = 0; break; }
 
             }
