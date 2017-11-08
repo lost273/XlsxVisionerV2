@@ -222,7 +222,6 @@
             this.tablePrintPreviewDialog.AutoScrollMargin = new System.Drawing.Size(0, 0);
             this.tablePrintPreviewDialog.AutoScrollMinSize = new System.Drawing.Size(0, 0);
             this.tablePrintPreviewDialog.ClientSize = new System.Drawing.Size(400, 300);
-            this.tablePrintPreviewDialog.Document = this.tablePrintDocument;
             this.tablePrintPreviewDialog.Enabled = true;
             this.tablePrintPreviewDialog.Icon = ((System.Drawing.Icon)(resources.GetObject("tablePrintPreviewDialog.Icon")));
             this.tablePrintPreviewDialog.Name = "tablePrintPreviewDialog";
@@ -230,6 +229,7 @@
             // 
             // tablePrintDocument
             // 
+            this.tablePrintDocument.BeginPrint += new System.Drawing.Printing.PrintEventHandler(this.tablePrintDocument_BeginPrint);
             this.tablePrintDocument.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.tablePrintDocument_PrintPage);
             // 
             // Form1

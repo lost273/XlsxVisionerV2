@@ -330,14 +330,10 @@ namespace XlsxVisionerV2 {
 
         private void PrintButton_Click (object sender, EventArgs e) {
             tablePrintDocument.DocumentName = openFileDialog1.SafeFileName;
-            tablePrintDialog.Document = tablePrintDocument;
-            //tablePrintPreviewDialog.Document = tablePrintDocument;
-            tablePrintDialog.ShowDialog();
+
+            tablePrintPreviewDialog.Document = tablePrintDocument;
+            
             tablePrintPreviewDialog.ShowDialog();
-            //DialogResult result = tablePrintPreviewDialog.ShowDialog();
-            //if (result == DialogResult.OK) {
-            //    tablePrintDocument.Print();
-            //}
         }
 
         private void tablePrintDocument_PrintPage (object sender, System.Drawing.Printing.PrintPageEventArgs e) {
@@ -387,6 +383,14 @@ namespace XlsxVisionerV2 {
                 //table has got the end, but 1000 pixels didn't print
                 if ((realheight < 1000) && (rowCounter >= dataGridViewSelect.Rows.Count)) { e.HasMorePages = false; rowCounter = 0; break; }
 
+            }
+        }
+        //combining PrintPreview and PrintDialog
+        private void tablePrintDocument_BeginPrint (object sender, System.Drawing.Printing.PrintEventArgs e) {
+            //make this counter by zero, for redraw PrintDocument
+            rowCounter = 0;
+            if (e.PrintAction != System.Drawing.Printing.PrintAction.PrintToPreview) {
+                tablePrintDialog.ShowDialog();
             }
         }
     }
