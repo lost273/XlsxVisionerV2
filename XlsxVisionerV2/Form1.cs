@@ -330,9 +330,7 @@ namespace XlsxVisionerV2 {
 
         private void PrintButton_Click (object sender, EventArgs e) {
             tablePrintDocument.DocumentName = openFileDialog1.SafeFileName;
-
             tablePrintPreviewDialog.Document = tablePrintDocument;
-            
             tablePrintPreviewDialog.ShowDialog();
         }
 
@@ -392,6 +390,59 @@ namespace XlsxVisionerV2 {
             if (e.PrintAction != System.Drawing.Printing.PrintAction.PrintToPreview) {
                 tablePrintDialog.ShowDialog();
             }
+        }
+
+        private void DiagramButton_Click (object sender, EventArgs e) {
+            Form2 diagramForm = new Form2();
+            diagramForm.Show();
+             
+
+            diagramForm.dataChart.Visible = true;
+            Chart1.Series.Clear();
+            Chart1.Titles.Clear();
+            // Форматировать диаграмму
+            Chart1.BackColor = Color.Gray;
+            Chart1.BackSecondaryColor = Color.WhiteSmoke;
+            Chart1.BackGradientStyle = GradientStyle.DiagonalRight;
+
+            Chart1.BorderlineDashStyle = ChartDashStyle.Solid;
+            Chart1.BorderlineColor = Color.Gray;
+            Chart1.BorderSkin.SkinStyle = BorderSkinStyle.Emboss;
+
+            // Форматировать область диаграммы
+            Chart1.ChartAreas[0].BackColor = Color.Wheat;
+
+            // Добавить и форматировать заголовок
+            Chart1.Titles.Add("Структура продаж");
+            Chart1.Titles[0].Font = new Font("Courier New", 10);
+
+            Chart1.Series.Add(new Series("ColumnSeries") { ChartType = SeriesChartType.Pie });
+            //формируем массив значений для графика
+            string[] xValues = { "Заправка лазерных - ", "Заправка струйных - ", "Ремонт картриджей - ", "Ремонт принтера - ", "Чернила - ", "Печать - ", "Товар - " };
+            double[] yValues = { 0, 0, 0, 0, 0, 0, 0 };
+
+            for (int Rnum = 0; Rnum < dt.Rows.Count; Rnum++) {
+                if (dt.Rows[Rnum][0].ToString() == "заправка лазерного") { yValues[0] += Convert.ToDouble(dt.Rows[Rnum][3]); }
+                else if (dt.Rows[Rnum][0].ToString() == "заправка струйного") { yValues[1] += Convert.ToDouble(dt.Rows[Rnum][3]); }
+                else if (dt.Rows[Rnum][0].ToString() == "ремонт картриджа") { yValues[2] += Convert.ToDouble(dt.Rows[Rnum][3]); }
+                else if (dt.Rows[Rnum][0].ToString() == "ремонт принтера") { yValues[3] += Convert.ToDouble(dt.Rows[Rnum][3]); }
+                else if (dt.Rows[Rnum][0].ToString() == "чернила") { yValues[4] += Convert.ToDouble(dt.Rows[Rnum][3]); }
+                else if (dt.Rows[Rnum][0].ToString() == "печать") { yValues[5] += Convert.ToDouble(dt.Rows[Rnum][3]); }
+                else { yValues[6] += Convert.ToDouble(dt.Rows[Rnum][3]); }
+            }
+
+            xValues[0] = xValues[0] + Math.Round((yValues[0] / totalInfo[0] * 100), 2).ToString() + " %";
+            xValues[1] = xValues[1] + Math.Round((yValues[1] / totalInfo[0] * 100), 2).ToString() + " %";
+            xValues[2] = xValues[2] + Math.Round((yValues[2] / totalInfo[0] * 100), 2).ToString() + " %";
+            xValues[3] = xValues[3] + Math.Round((yValues[3] / totalInfo[0] * 100), 2).ToString() + " %";
+            xValues[4] = xValues[4] + Math.Round((yValues[4] / totalInfo[0] * 100), 2).ToString() + " %";
+            xValues[5] = xValues[5] + Math.Round((yValues[5] / totalInfo[0] * 100), 2).ToString() + " %";
+            xValues[6] = xValues[6] + Math.Round((yValues[6] / totalInfo[0] * 100), 2).ToString() + " %";
+
+            Chart1.Series["ColumnSeries"].Points.DataBindXY(xValues, yValues);
+            Chart1.Series["ColumnSeries"].IsValueShownAsLabel = true;
+
+            Chart1.ChartAreas[0].Area3DStyle.Enable3D = true;
         }
     }
 }

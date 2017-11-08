@@ -211,7 +211,7 @@
             this.diagramButton.TabIndex = 0;
             this.diagramButton.Text = "Diagram";
             this.diagramButton.UseVisualStyleBackColor = true;
-            this.diagramButton.Click += new System.EventHandler(this.OpenButton_Click);
+            this.diagramButton.Click += new System.EventHandler(this.DiagramButton_Click);
             // 
             // tablePrintDialog
             // 

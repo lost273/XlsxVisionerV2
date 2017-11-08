@@ -16,3 +16,4 @@ D:\prog\VSProj\GIT\XlsxVisionerV2\XlsxVisionerV2\obj\Debug\XlsxVisionerV2.csproj
 D:\prog\VSProj\GIT\XlsxVisionerV2\XlsxVisionerV2\obj\Debug\XlsxVisionerV2.exe
 D:\prog\VSProj\GIT\XlsxVisionerV2\XlsxVisionerV2\obj\Debug\XlsxVisionerV2.pdb
 D:\programs\Projects\GIT\XlsxVisionerV2\XlsxVisionerV2\obj\Debug\XlsxVisionerV2.csprojResolveAssemblyReference.cache
+D:\programs\Projects\GIT\XlsxVisionerV2\XlsxVisionerV2\obj\Debug\XlsxVisionerV2.Form2.resources
