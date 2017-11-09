@@ -394,21 +394,25 @@ namespace XlsxVisionerV2 {
 
         private void DiagramButton_Click (object sender, EventArgs e) {
             bool isValueFound = false;
+            List<string> xValues = new List<string>();
+            List<decimal> yValues = new List<decimal>();
             //make a list for the diagram
             int dataIndex = dataGridViewSelect.Columns.Count - 1;
-            for (int row = 0; row < dataGridViewSelect.Rows.Count; row++) {
-                int listLength = DiagramData.xValues.Count;
-                for (int index = 0; index < listLength; index++) {
-                    if (DiagramData.xValues[index] == dataGridViewSelect.Rows[row].Cells[0].Value.ToString()) {
-                        DiagramData.yValues[index] += Convert.ToDecimal(dataGridViewSelect.Rows[row].Cells[dataIndex].Value);
+            for (int row = 1; row < dataGridViewSelect.Rows.Count; row++) {
+                for (int index = 0; index < xValues.Count; index++) {
+                    if ((xValues.Capacity > 0) && (xValues[index] == dataGridViewSelect.Rows[row].Cells[0].Value.ToString())) {
+                        yValues[index] += Convert.ToDecimal(dataGridViewSelect.Rows[row].Cells[dataIndex].Value);
                         isValueFound = true;
                     }
                 }
                 if (!isValueFound) {
-                    DiagramData.xValues.Add(dataGridViewSelect.Rows[row].Cells[0].Value.ToString());
-                    DiagramData.yValues.Add(Convert.ToDecimal(dataGridViewSelect.Rows[row].Cells[dataIndex].Value));
+                    xValues.Add(dataGridViewSelect.Rows[row].Cells[0].Value.ToString());
+                    yValues.Add(Convert.ToDecimal(dataGridViewSelect.Rows[row].Cells[dataIndex].Value));
                 }
             }
+            DiagramData.xValues = xValues;
+            DiagramData.yValues = yValues;
+
             Form2 diagramForm = new Form2();
             diagramForm.ShowDialog();
         }
