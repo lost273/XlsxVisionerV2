@@ -17,7 +17,7 @@ namespace XlsxVisionerV2 {
         }
     }
     static class DiagramData {
-        public static string[] xValues { get; set; }
-        public static decimal[] yValues { get; set; }
+        public static List<string> xValues { get; set; }
+        public static List<decimal> yValues { get; set; }
     }
 }

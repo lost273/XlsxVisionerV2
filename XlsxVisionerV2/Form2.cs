@@ -15,7 +15,7 @@ namespace XlsxVisionerV2 {
             InitializeComponent();
             DrawDiagram(DiagramData.xValues, DiagramData.yValues);
         }
-        public void DrawDiagram (string[] x, decimal[] y) {
+        public void DrawDiagram (List<string> x, List<decimal> y) {
             // config the diagram
             dataChart.BackColor = Color.Gray;
             dataChart.BackSecondaryColor = Color.WhiteSmoke;
