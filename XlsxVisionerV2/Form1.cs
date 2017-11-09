@@ -393,10 +393,18 @@ namespace XlsxVisionerV2 {
         }
 
         private void DiagramButton_Click (object sender, EventArgs e) {
+            bool isValueFound = false;
             //make an array for the diagram
-
-            DiagramData.xValues[index] = dataGridViewSelect.Rows[row].Cells[col].Value.ToString()
-            DiagramData.yValues
+            int dataIndex = dataGridViewSelect.Columns.Count - 1;
+            for (int row = 0; row < dataGridViewSelect.Rows.Count; row++) {
+                for (int index = 0; index < DiagramData.xValues.Length; index++) {
+                    if (DiagramData.xValues[index] == dataGridViewSelect.Rows[row].Cells[0].Value.ToString()) {
+                        DiagramData.yValues[index] += Convert.ToDecimal(dataGridViewSelect.Rows[row].Cells[dataIndex].Value);
+                        isValueFound = true;
+                    }
+                    
+                }
+            }
 
 
             string[] xValues = { "Заправка лазерных - ", "Заправка струйных - ", "Ремонт картриджей - ", "Ремонт принтера - ", "Чернила - ", "Печать - ", "Товар - " };
