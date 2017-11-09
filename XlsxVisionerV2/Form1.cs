@@ -393,12 +393,30 @@ namespace XlsxVisionerV2 {
         }
 
         private void DiagramButton_Click (object sender, EventArgs e) {
+            //make array for the diagram
+            string[] xValues = { "Заправка лазерных - ", "Заправка струйных - ", "Ремонт картриджей - ", "Ремонт принтера - ", "Чернила - ", "Печать - ", "Товар - " };
+            double[] yValues = { 0, 0, 0, 0, 0, 0, 0 };
+
+            for (int Rnum = 0; Rnum < dt.Rows.Count; Rnum++) {
+                if (dt.Rows[Rnum][0].ToString() == "заправка лазерного") { yValues[0] += Convert.ToDouble(dt.Rows[Rnum][3]); }
+                else if (dt.Rows[Rnum][0].ToString() == "заправка струйного") { yValues[1] += Convert.ToDouble(dt.Rows[Rnum][3]); }
+                else if (dt.Rows[Rnum][0].ToString() == "ремонт картриджа") { yValues[2] += Convert.ToDouble(dt.Rows[Rnum][3]); }
+                else if (dt.Rows[Rnum][0].ToString() == "ремонт принтера") { yValues[3] += Convert.ToDouble(dt.Rows[Rnum][3]); }
+                else if (dt.Rows[Rnum][0].ToString() == "чернила") { yValues[4] += Convert.ToDouble(dt.Rows[Rnum][3]); }
+                else if (dt.Rows[Rnum][0].ToString() == "печать") { yValues[5] += Convert.ToDouble(dt.Rows[Rnum][3]); }
+                else { yValues[6] += Convert.ToDouble(dt.Rows[Rnum][3]); }
+            }
+
+            xValues[0] = xValues[0] + Math.Round((yValues[0] / totalInfo[0] * 100), 2).ToString() + " %";
+            xValues[1] = xValues[1] + Math.Round((yValues[1] / totalInfo[0] * 100), 2).ToString() + " %";
+            xValues[2] = xValues[2] + Math.Round((yValues[2] / totalInfo[0] * 100), 2).ToString() + " %";
+            xValues[3] = xValues[3] + Math.Round((yValues[3] / totalInfo[0] * 100), 2).ToString() + " %";
+            xValues[4] = xValues[4] + Math.Round((yValues[4] / totalInfo[0] * 100), 2).ToString() + " %";
+            xValues[5] = xValues[5] + Math.Round((yValues[5] / totalInfo[0] * 100), 2).ToString() + " %";
+            xValues[6] = xValues[6] + Math.Round((yValues[6] / totalInfo[0] * 100), 2).ToString() + " %";
+
             Form2 diagramForm = new Form2();
-
             diagramForm.ShowDialog();
-             
-
-            
         }
     }
 }
