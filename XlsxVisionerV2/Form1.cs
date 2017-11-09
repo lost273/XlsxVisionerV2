@@ -393,7 +393,12 @@ namespace XlsxVisionerV2 {
         }
 
         private void DiagramButton_Click (object sender, EventArgs e) {
-            //make array for the diagram
+            //make an array for the diagram
+
+            DiagramData.xValues[index] = dataGridViewSelect.Rows[row].Cells[col].Value.ToString()
+            DiagramData.yValues
+
+
             string[] xValues = { "Заправка лазерных - ", "Заправка струйных - ", "Ремонт картриджей - ", "Ремонт принтера - ", "Чернила - ", "Печать - ", "Товар - " };
             double[] yValues = { 0, 0, 0, 0, 0, 0, 0 };
 
