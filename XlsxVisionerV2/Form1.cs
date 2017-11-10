@@ -397,8 +397,6 @@ namespace XlsxVisionerV2 {
             int dataIndex = dataGridViewSelect.Columns.Count - 1;
             List<string> xValues = new List<string>();
             List<decimal> yValues = new List<decimal>();
-            //xValues.Add(dataGridViewSelect.Rows[0].Cells[0].Value.ToString());
-            //yValues.Add(Convert.ToDecimal(dataGridViewSelect.Rows[0].Cells[dataIndex].Value));
 
             //make a list for the diagram
             for (int row = 0; row < dataGridViewSelect.Rows.Count - 1; row++) {

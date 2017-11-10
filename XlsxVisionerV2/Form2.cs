@@ -23,18 +23,19 @@ namespace XlsxVisionerV2 {
             dataChart.BorderlineDashStyle = ChartDashStyle.Solid;
             dataChart.BorderlineColor = Color.Gray;
             dataChart.BorderSkin.SkinStyle = BorderSkinStyle.Emboss;
+            dataChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
 
             // config an area of the diagram
-            dataChart.ChartAreas[0].BackColor = Color.Wheat;
+            dataChart.ChartAreas[0].BackColor = Color.White;
 
             // add and format the title
             dataChart.Titles.Add("Data");
             dataChart.Titles[0].Font = new Font("Courier New", 10);
 
-            dataChart.Series.Add(new Series("ColumnSeries") { ChartType = SeriesChartType.Pie });
+            dataChart.Series.Add(new Series("ColumnSeries") { ChartType = SeriesChartType.Bar });
             dataChart.Series["ColumnSeries"].Points.DataBindXY(x, y);
             dataChart.Series["ColumnSeries"].IsValueShownAsLabel = true;
-            dataChart.ChartAreas[0].Area3DStyle.Enable3D = true;
+            //dataChart.ChartAreas[0].Area3DStyle.Enable3D = true;
 
         }
     }
