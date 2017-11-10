@@ -404,6 +404,9 @@ namespace XlsxVisionerV2 {
                         yValues[index] += Convert.ToDecimal(dataGridViewSelect.Rows[row].Cells[dataIndex].Value);
                         isValueFound = true;
                     }
+                    else {
+                        isValueFound = false;
+                    }
                 }
                 if (!isValueFound) {
                     xValues.Add(dataGridViewSelect.Rows[row].Cells[0].Value.ToString());
@@ -412,7 +415,7 @@ namespace XlsxVisionerV2 {
             }
             DiagramData.xValues = xValues;
             DiagramData.yValues = yValues;
-
+            
             Form2 diagramForm = new Form2();
             diagramForm.ShowDialog();
         }

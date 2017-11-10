@@ -34,15 +34,18 @@
             // 
             chartArea1.Name = "ChartArea1";
             this.dataChart.ChartAreas.Add(chartArea1);
+            this.dataChart.Dock = System.Windows.Forms.DockStyle.Top;
+            legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
             legend1.Name = "Legend1";
             this.dataChart.Legends.Add(legend1);
-            this.dataChart.Location = new System.Drawing.Point(85, 114);
+            this.dataChart.Location = new System.Drawing.Point(0, 0);
             this.dataChart.Name = "dataChart";
             series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.dataChart.Series.Add(series1);
-            this.dataChart.Size = new System.Drawing.Size(300, 300);
+            this.dataChart.Size = new System.Drawing.Size(484, 406);
             this.dataChart.TabIndex = 0;
             this.dataChart.Text = "chart1";
             // 
