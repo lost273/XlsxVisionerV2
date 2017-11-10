@@ -397,24 +397,22 @@ namespace XlsxVisionerV2 {
             int dataIndex = dataGridViewSelect.Columns.Count - 1;
             List<string> xValues = new List<string>();
             List<decimal> yValues = new List<decimal>();
-            xValues.Add(dataGridViewSelect.Rows[0].Cells[0].Value.ToString());
-            yValues.Add(Convert.ToDecimal(dataGridViewSelect.Rows[0].Cells[dataIndex].Value));
+            //xValues.Add(dataGridViewSelect.Rows[0].Cells[0].Value.ToString());
+            //yValues.Add(Convert.ToDecimal(dataGridViewSelect.Rows[0].Cells[dataIndex].Value));
 
             //make a list for the diagram
-            for (int row = 1; row < dataGridViewSelect.Rows.Count - 1; row++) {
+            for (int row = 0; row < dataGridViewSelect.Rows.Count - 1; row++) {
                 for (int index = 0; index < xValues.Count; index++) {
                     if (xValues[index] == dataGridViewSelect.Rows[row].Cells[0].Value.ToString()) {
                         yValues[index] += Convert.ToDecimal(dataGridViewSelect.Rows[row].Cells[dataIndex].Value);
                         isValueFound = true;
                     }
-                    else {
-                        isValueFound = false;
-                    }
-                    if (!isValueFound) {
-                        xValues.Add(dataGridViewSelect.Rows[row].Cells[0].Value.ToString());
-                        yValues.Add(Convert.ToDecimal(dataGridViewSelect.Rows[row].Cells[dataIndex].Value));
-                    }
                 }
+                if (!isValueFound) {
+                    xValues.Add(dataGridViewSelect.Rows[row].Cells[0].Value.ToString());
+                    yValues.Add(Convert.ToDecimal(dataGridViewSelect.Rows[row].Cells[dataIndex].Value));
+                }
+                isValueFound = false;
             }
             DiagramData.xValues = xValues;
             DiagramData.yValues = yValues;
