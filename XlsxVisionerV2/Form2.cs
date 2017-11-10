@@ -11,11 +11,23 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace XlsxVisionerV2 {
     public partial class Form2 : Form {
+
         public Form2 () {
             InitializeComponent();
             DrawDiagram(DiagramData.xValues, DiagramData.yValues);
         }
         public void DrawDiagram (List<string> x, List<decimal> y) {
+            Color[] barColors = new Color[8]{
+                Color.Purple,
+                Color.SteelBlue,
+                Color.Aqua,
+                Color.Yellow,
+                Color.Navy,
+                Color.Green,
+                Color.Blue,
+                Color.Red
+            };
+
             // config the diagram
             dataChart.BackColor = Color.Gray;
             dataChart.BackSecondaryColor = Color.WhiteSmoke;
@@ -26,7 +38,8 @@ namespace XlsxVisionerV2 {
             dataChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
 
             // config an area of the diagram
-            dataChart.ChartAreas[0].BackColor = Color.White;
+            dataChart.ChartAreas[0].BackColor = Color.WhiteSmoke;
+            dataChart.ChartAreas[0].AxisX.Interval = 1;
 
             // add and format the title
             dataChart.Titles.Add("Data");
@@ -35,6 +48,11 @@ namespace XlsxVisionerV2 {
             dataChart.Series.Add(new Series("ColumnSeries") { ChartType = SeriesChartType.Bar });
             dataChart.Series["ColumnSeries"].Points.DataBindXY(x, y);
             dataChart.Series["ColumnSeries"].IsValueShownAsLabel = true;
+
+            Random rand = new Random();
+            foreach (DataPoint item in dataChart.Series["ColumnSeries"].Points) {
+                item.Color = barColors[rand.Next(8)];
+            }
             //dataChart.ChartAreas[0].Area3DStyle.Enable3D = true;
 
         }
