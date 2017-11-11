@@ -75,19 +75,8 @@ namespace XlsxVisionerV2 {
         }
 
         private void PrintChartButton_Click(object sender, EventArgs e) {
-            chartPrintDocument = dataChart.Printing.PrintDocument;
-            chartPrintPreviewDialog.Document = chartPrintDocument;
-
-            chartPrintPreviewDialog.ShowDialog();
-
-            //dataChart.Printing.PrintDocument = chartPrintDocument;
-            //dataChart.Printing.PrintPreview();
-        }
-
-        private void chartPrintDocument_BeginPrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
-            if (e.PrintAction != System.Drawing.Printing.PrintAction.PrintToPreview) {
-                chartPrintDialog.ShowDialog();
-            }
+                dataChart.Printing.PrintPreview();
+                dataChart.Printing.Print(true);
         }
     }
 }

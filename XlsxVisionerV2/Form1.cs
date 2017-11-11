@@ -331,7 +331,12 @@ namespace XlsxVisionerV2 {
         private void PrintButton_Click (object sender, EventArgs e) {
             tablePrintDocument.DocumentName = openFileDialog1.SafeFileName;
             tablePrintPreviewDialog.Document = tablePrintDocument;
-            tablePrintPreviewDialog.ShowDialog();
+            tablePrintDialog.Document = tablePrintDocument;
+            tablePrintDialog.ShowDialog();
+            
+            if (tablePrintPreviewDialog.ShowDialog() == DialogResult.OK) {
+                tablePrintDocument.Print();
+            }
         }
 
         private void tablePrintDocument_PrintPage (object sender, System.Drawing.Printing.PrintPageEventArgs e) {
@@ -387,9 +392,6 @@ namespace XlsxVisionerV2 {
         private void tablePrintDocument_BeginPrint (object sender, System.Drawing.Printing.PrintEventArgs e) {
             //make this counter by zero, for redraw PrintDocument
             rowCounter = 0;
-            if (e.PrintAction != System.Drawing.Printing.PrintAction.PrintToPreview) {
-                tablePrintDialog.ShowDialog();
-            }
         }
 
         private void DiagramButton_Click (object sender, EventArgs e) {

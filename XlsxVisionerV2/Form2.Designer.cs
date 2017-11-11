@@ -23,33 +23,29 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent () {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.dataChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.printChartButton = new System.Windows.Forms.Button();
-            this.chartPrintDocument = new System.Drawing.Printing.PrintDocument();
-            this.chartPrintDialog = new System.Windows.Forms.PrintDialog();
-            this.chartPrintPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataChart)).BeginInit();
             this.SuspendLayout();
             // 
             // dataChart
             // 
-            chartArea1.AxisX.Interval = 1D;
-            chartArea1.Name = "ChartArea1";
-            this.dataChart.ChartAreas.Add(chartArea1);
+            chartArea5.AxisX.Interval = 1D;
+            chartArea5.Name = "ChartArea1";
+            this.dataChart.ChartAreas.Add(chartArea5);
             this.dataChart.Dock = System.Windows.Forms.DockStyle.Top;
             this.dataChart.Location = new System.Drawing.Point(0, 0);
             this.dataChart.Name = "dataChart";
             this.dataChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
-            series1.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            series1.LabelForeColor = System.Drawing.Color.White;
-            series1.MarkerSize = 10;
-            series1.Name = "Series1";
-            this.dataChart.Series.Add(series1);
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
+            series5.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            series5.LabelForeColor = System.Drawing.Color.White;
+            series5.MarkerSize = 10;
+            series5.Name = "Series1";
+            this.dataChart.Series.Add(series5);
             this.dataChart.Size = new System.Drawing.Size(779, 529);
             this.dataChart.TabIndex = 0;
             this.dataChart.Text = "chart1";
@@ -64,24 +60,6 @@
             this.printChartButton.Text = "Print";
             this.printChartButton.UseVisualStyleBackColor = true;
             this.printChartButton.Click += new System.EventHandler(this.PrintChartButton_Click);
-            // 
-            // chartPrintDocument
-            // 
-            this.chartPrintDocument.BeginPrint += new System.Drawing.Printing.PrintEventHandler(this.chartPrintDocument_BeginPrint);
-            // 
-            // chartPrintDialog
-            // 
-            this.chartPrintDialog.UseEXDialog = true;
-            // 
-            // chartPrintPreviewDialog
-            // 
-            this.chartPrintPreviewDialog.AutoScrollMargin = new System.Drawing.Size(0, 0);
-            this.chartPrintPreviewDialog.AutoScrollMinSize = new System.Drawing.Size(0, 0);
-            this.chartPrintPreviewDialog.ClientSize = new System.Drawing.Size(400, 300);
-            this.chartPrintPreviewDialog.Enabled = true;
-            this.chartPrintPreviewDialog.Icon = ((System.Drawing.Icon)(resources.GetObject("chartPrintPreviewDialog.Icon")));
-            this.chartPrintPreviewDialog.Name = "chartPrintPreviewDialog";
-            this.chartPrintPreviewDialog.Visible = false;
             // 
             // Form2
             // 
@@ -104,8 +82,5 @@
 
         private System.Windows.Forms.DataVisualization.Charting.Chart dataChart;
         private System.Windows.Forms.Button printChartButton;
-        private System.Drawing.Printing.PrintDocument chartPrintDocument;
-        private System.Windows.Forms.PrintDialog chartPrintDialog;
-        private System.Windows.Forms.PrintPreviewDialog chartPrintPreviewDialog;
     }
 }
