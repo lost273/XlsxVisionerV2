@@ -75,11 +75,10 @@ namespace XlsxVisionerV2 {
         }
 
         private void PrintChartButton_Click(object sender, EventArgs e) {
-            PrintPreviewDialog printPreviewDialog1 = new PrintPreviewDialog();
+            chartPrintDocument = dataChart.Printing.PrintDocument;
+            chartPrintPreviewDialog.Document = chartPrintDocument;
 
-            printPreviewDialog1.Document = this.dataChart.PrintDocument;
-
-            printPreviewDialog1.ShowDialog();
+            chartPrintPreviewDialog.ShowDialog();
 
             //dataChart.Printing.PrintDocument = chartPrintDocument;
             //dataChart.Printing.PrintPreview();

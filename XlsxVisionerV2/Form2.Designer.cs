@@ -25,10 +25,12 @@
         private void InitializeComponent () {
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
             this.dataChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.printChartButton = new System.Windows.Forms.Button();
             this.chartPrintDocument = new System.Drawing.Printing.PrintDocument();
             this.chartPrintDialog = new System.Windows.Forms.PrintDialog();
+            this.chartPrintPreviewDialog = new System.Windows.Forms.PrintPreviewDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataChart)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,6 +73,16 @@
             // 
             this.chartPrintDialog.UseEXDialog = true;
             // 
+            // chartPrintPreviewDialog
+            // 
+            this.chartPrintPreviewDialog.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.chartPrintPreviewDialog.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.chartPrintPreviewDialog.ClientSize = new System.Drawing.Size(400, 300);
+            this.chartPrintPreviewDialog.Enabled = true;
+            this.chartPrintPreviewDialog.Icon = ((System.Drawing.Icon)(resources.GetObject("chartPrintPreviewDialog.Icon")));
+            this.chartPrintPreviewDialog.Name = "chartPrintPreviewDialog";
+            this.chartPrintPreviewDialog.Visible = false;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -94,5 +106,6 @@
         private System.Windows.Forms.Button printChartButton;
         private System.Drawing.Printing.PrintDocument chartPrintDocument;
         private System.Windows.Forms.PrintDialog chartPrintDialog;
+        private System.Windows.Forms.PrintPreviewDialog chartPrintPreviewDialog;
     }
 }
