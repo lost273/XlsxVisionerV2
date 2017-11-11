@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -330,12 +331,13 @@ namespace XlsxVisionerV2 {
 
         private void PrintButton_Click (object sender, EventArgs e) {
             tablePrintDocument.DocumentName = openFileDialog1.SafeFileName;
-            tablePrintPreviewDialog.Document = tablePrintDocument;
+            tablePrintDialog.AllowSomePages = true;
             tablePrintDialog.Document = tablePrintDocument;
-            tablePrintDialog.ShowDialog();
-            
-            if (tablePrintPreviewDialog.ShowDialog() == DialogResult.OK) {
-                tablePrintDocument.Print();
+            if (tablePrintDialog.ShowDialog() == DialogResult.OK) {
+                tablePrintPreviewDialog.Document = tablePrintDocument;
+                if (tablePrintPreviewDialog.ShowDialog() == DialogResult.OK) {
+                    tablePrintDocument.Print();
+                }
             }
         }
 

@@ -53,6 +53,7 @@ namespace XlsxVisionerV2 {
             dataChart.BorderlineColor = Color.Gray;
             dataChart.BorderSkin.SkinStyle = BorderSkinStyle.Emboss;
             dataChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            dataChart.ChartAreas[0].AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dot;
 
             // config an area of the diagram
             dataChart.ChartAreas[0].BackColor = Color.WhiteSmoke;

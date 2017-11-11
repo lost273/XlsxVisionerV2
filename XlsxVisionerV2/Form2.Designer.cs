@@ -23,8 +23,8 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent () {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.dataChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.printChartButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataChart)).BeginInit();
@@ -32,20 +32,24 @@
             // 
             // dataChart
             // 
-            chartArea5.AxisX.Interval = 1D;
-            chartArea5.Name = "ChartArea1";
-            this.dataChart.ChartAreas.Add(chartArea5);
+            chartArea1.AxisX.Interval = 1D;
+            chartArea1.AxisX2.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea1.AxisY.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea1.AxisY2.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea1.Name = "ChartArea1";
+            this.dataChart.ChartAreas.Add(chartArea1);
             this.dataChart.Dock = System.Windows.Forms.DockStyle.Top;
             this.dataChart.Location = new System.Drawing.Point(0, 0);
             this.dataChart.Name = "dataChart";
             this.dataChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
-            series5.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            series5.LabelForeColor = System.Drawing.Color.White;
-            series5.MarkerSize = 10;
-            series5.Name = "Series1";
-            this.dataChart.Series.Add(series5);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
+            series1.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            series1.LabelForeColor = System.Drawing.Color.White;
+            series1.MarkerSize = 10;
+            series1.Name = "Series1";
+            series1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
+            this.dataChart.Series.Add(series1);
             this.dataChart.Size = new System.Drawing.Size(779, 529);
             this.dataChart.TabIndex = 0;
             this.dataChart.Text = "chart1";
