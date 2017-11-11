@@ -17,7 +17,7 @@ namespace XlsxVisionerV2 {
             DrawDiagram(DiagramData.xValues, DiagramData.yValues);
         }
         public void DrawDiagram (List<string> x, List<decimal> y) {
-            Color[] barColors = new Color[8]{
+            Color[] barColors = new Color[25]{
                 Color.Purple,
                 Color.SteelBlue,
                 Color.Aqua,
@@ -25,7 +25,24 @@ namespace XlsxVisionerV2 {
                 Color.Navy,
                 Color.Green,
                 Color.Blue,
-                Color.Red
+                Color.Red,
+                Color.BlueViolet,
+                Color.BurlyWood,
+                Color.Chartreuse,
+                Color.Chocolate,
+                Color.Coral,
+                Color.DarkGreen,
+                Color.DarkOrange,
+                Color.Firebrick,
+                Color.Indigo,
+                Color.LightSkyBlue,
+                Color.MediumOrchid,
+                Color.Olive,
+                Color.PaleVioletRed,
+                Color.SandyBrown,
+                Color.SlateGray,
+                Color.SpringGreen,
+                Color.Yellow
             };
 
             // config the diagram
@@ -42,8 +59,8 @@ namespace XlsxVisionerV2 {
             dataChart.ChartAreas[0].AxisX.Interval = 1;
 
             // add and format the title
-            dataChart.Titles.Add("Data");
-            dataChart.Titles[0].Font = new Font("Courier New", 10);
+            //dataChart.Titles.Add("Data");
+            //dataChart.Titles[0].Font = new Font("Courier New", 10);
 
             dataChart.Series.Add(new Series("ColumnSeries") { ChartType = SeriesChartType.Bar });
             dataChart.Series["ColumnSeries"].Points.DataBindXY(x, y);
@@ -51,10 +68,27 @@ namespace XlsxVisionerV2 {
 
             Random rand = new Random();
             foreach (DataPoint item in dataChart.Series["ColumnSeries"].Points) {
-                item.Color = barColors[rand.Next(8)];
+                item.Color = barColors[rand.Next(25)];
             }
             //dataChart.ChartAreas[0].Area3DStyle.Enable3D = true;
 
+        }
+
+        private void PrintChartButton_Click(object sender, EventArgs e) {
+            PrintPreviewDialog printPreviewDialog1 = new PrintPreviewDialog();
+
+            printPreviewDialog1.Document = this.dataChart.PrintDocument;
+
+            printPreviewDialog1.ShowDialog();
+
+            //dataChart.Printing.PrintDocument = chartPrintDocument;
+            //dataChart.Printing.PrintPreview();
+        }
+
+        private void chartPrintDocument_BeginPrint(object sender, System.Drawing.Printing.PrintEventArgs e) {
+            if (e.PrintAction != System.Drawing.Printing.PrintAction.PrintToPreview) {
+                chartPrintDialog.ShowDialog();
+            }
         }
     }
 }

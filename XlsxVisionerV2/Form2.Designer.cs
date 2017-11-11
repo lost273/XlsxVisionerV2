@@ -26,15 +26,15 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.dataChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.printChartButton = new System.Windows.Forms.Button();
+            this.chartPrintDocument = new System.Drawing.Printing.PrintDocument();
+            this.chartPrintDialog = new System.Windows.Forms.PrintDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataChart)).BeginInit();
             this.SuspendLayout();
             // 
             // dataChart
             // 
             chartArea1.AxisX.Interval = 1D;
-            chartArea1.AxisX.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.IncreaseFont | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.DecreaseFont) 
-            | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.StaggeredLabels) 
-            | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep30)));
             chartArea1.Name = "ChartArea1";
             this.dataChart.ChartAreas.Add(chartArea1);
             this.dataChart.Dock = System.Windows.Forms.DockStyle.Top;
@@ -48,15 +48,35 @@
             series1.MarkerSize = 10;
             series1.Name = "Series1";
             this.dataChart.Series.Add(series1);
-            this.dataChart.Size = new System.Drawing.Size(553, 406);
+            this.dataChart.Size = new System.Drawing.Size(779, 529);
             this.dataChart.TabIndex = 0;
             this.dataChart.Text = "chart1";
+            // 
+            // printChartButton
+            // 
+            this.printChartButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.printChartButton.Location = new System.Drawing.Point(335, 535);
+            this.printChartButton.Name = "printChartButton";
+            this.printChartButton.Size = new System.Drawing.Size(75, 45);
+            this.printChartButton.TabIndex = 1;
+            this.printChartButton.Text = "Print";
+            this.printChartButton.UseVisualStyleBackColor = true;
+            this.printChartButton.Click += new System.EventHandler(this.PrintChartButton_Click);
+            // 
+            // chartPrintDocument
+            // 
+            this.chartPrintDocument.BeginPrint += new System.Drawing.Printing.PrintEventHandler(this.chartPrintDocument_BeginPrint);
+            // 
+            // chartPrintDialog
+            // 
+            this.chartPrintDialog.UseEXDialog = true;
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(553, 559);
+            this.ClientSize = new System.Drawing.Size(779, 592);
+            this.Controls.Add(this.printChartButton);
             this.Controls.Add(this.dataChart);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -71,5 +91,8 @@
         #endregion
 
         private System.Windows.Forms.DataVisualization.Charting.Chart dataChart;
+        private System.Windows.Forms.Button printChartButton;
+        private System.Drawing.Printing.PrintDocument chartPrintDocument;
+        private System.Windows.Forms.PrintDialog chartPrintDialog;
     }
 }
