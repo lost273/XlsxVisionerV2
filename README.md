@@ -1,4 +1,5 @@
-# XlsxVisionerV2 - the program provides the display of Excel files and the collection of user-selected data. ##Made for home accounting and small business.
+# XlsxVisionerV2 - the program provides the display of Excel files and the collection of user-selected data.
+##Made for home accounting and small business.
 
 INSTALLATION
 ------------
