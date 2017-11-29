@@ -62,7 +62,7 @@ namespace XlsxVisionerV2 {
                 }
             }
 
-            //Read Data from the First Sheet.
+            //Read Data from the Sheets.
             using (OleDbConnection con = new OleDbConnection(conStr)) {
                 using (OleDbCommand cmd = new OleDbCommand()) {
                     using (OleDbDataAdapter oda = new OleDbDataAdapter()) {
